@@ -10,5 +10,9 @@
 
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
+    #import "Constants.h"
     #import <Foundation/Foundation.h>
+    #import <AVFoundation/AVFoundation.h>
+    #import "SoundEffects.h"
+    #import <QuartzCore/QuartzCore.h>
 #endif

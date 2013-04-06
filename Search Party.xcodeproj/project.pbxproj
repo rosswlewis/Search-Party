@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D4BBA5517012C0D00B53E63 /* SoundEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4BBA5417012C0D00B53E63 /* SoundEffects.m */; };
+		1D4BBA571703D7D300B53E63 /* badQueries.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 1D4BBA561703D7D300B53E63 /* badQueries.sqlite3 */; };
+		1DCA78DF170BB315008B9C63 /* firstQueries.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 1DCA78DE170BB315008B9C63 /* firstQueries.sqlite3 */; };
+		1DCA78E11710BD34008B9C63 /* Loopy loop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1DCA78E01710BD34008B9C63 /* Loopy loop.mp3 */; };
+		1DCA78E31710D105008B9C63 /* CD10.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1DCA78E21710D105008B9C63 /* CD10.mp3 */; };
 		1DE044B617010EF400CC35DA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DE044B517010EF400CC35DA /* UIKit.framework */; };
 		1DE044B817010EF400CC35DA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DE044B717010EF400CC35DA /* Foundation.framework */; };
 		1DE044BA17010EF400CC35DA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DE044B917010EF400CC35DA /* CoreGraphics.framework */; };
@@ -24,6 +29,16 @@
 		1DE044DF17010EF500CC35DA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DE044B717010EF400CC35DA /* Foundation.framework */; };
 		1DE044E717010EF500CC35DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DE044E517010EF500CC35DA /* InfoPlist.strings */; };
 		1DE044EA17010EF500CC35DA /* Search_PartyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE044E917010EF500CC35DA /* Search_PartyTests.m */; };
+		1DE044FA170111A000CC35DA /* GoogleSuggestions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE044F5170111A000CC35DA /* GoogleSuggestions.m */; };
+		1DE044FB170111A000CC35DA /* GoogleXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE044F7170111A000CC35DA /* GoogleXMLParser.m */; };
+		1DE044FC170111A000CC35DA /* OneSuggestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE044F9170111A000CC35DA /* OneSuggestion.m */; };
+		1DE044FF170111B900CC35DA /* QueryDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE044FE170111B900CC35DA /* QueryDatabase.m */; };
+		1DE04507170111EE00CC35DA /* phaserDown3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1DE04505170111EE00CC35DA /* phaserDown3.mp3 */; };
+		1DE04508170111EE00CC35DA /* phaserUp2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1DE04506170111EE00CC35DA /* phaserUp2.mp3 */; };
+		1DE0450A1701130A00CC35DA /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DE045091701130A00CC35DA /* libsqlite3.dylib */; };
+		1DE0450C1701133000CC35DA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DE0450B1701133000CC35DA /* AVFoundation.framework */; };
+		1DE04537170114A100CC35DA /* PartyModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE04536170114A100CC35DA /* PartyModeViewController.m */; };
+		1DE0453A1701177300CC35DA /* SoloModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE045391701177200CC35DA /* SoloModeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +52,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D4BBA5317012C0D00B53E63 /* SoundEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundEffects.h; sourceTree = "<group>"; };
+		1D4BBA5417012C0D00B53E63 /* SoundEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundEffects.m; sourceTree = "<group>"; };
+		1D4BBA561703D7D300B53E63 /* badQueries.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = badQueries.sqlite3; sourceTree = "<group>"; };
+		1DCA78DE170BB315008B9C63 /* firstQueries.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = firstQueries.sqlite3; sourceTree = "<group>"; };
+		1DCA78E01710BD34008B9C63 /* Loopy loop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Loopy loop.mp3"; sourceTree = "<group>"; };
+		1DCA78E21710D105008B9C63 /* CD10.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CD10.mp3; sourceTree = "<group>"; };
 		1DE044B217010EF400CC35DA /* Search Party.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Search Party.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DE044B517010EF400CC35DA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1DE044B717010EF400CC35DA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -60,6 +81,23 @@
 		1DE044E617010EF500CC35DA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1DE044E817010EF500CC35DA /* Search_PartyTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Search_PartyTests.h; sourceTree = "<group>"; };
 		1DE044E917010EF500CC35DA /* Search_PartyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Search_PartyTests.m; sourceTree = "<group>"; };
+		1DE044F4170111A000CC35DA /* GoogleSuggestions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleSuggestions.h; sourceTree = "<group>"; };
+		1DE044F5170111A000CC35DA /* GoogleSuggestions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleSuggestions.m; sourceTree = "<group>"; };
+		1DE044F6170111A000CC35DA /* GoogleXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleXMLParser.h; sourceTree = "<group>"; };
+		1DE044F7170111A000CC35DA /* GoogleXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleXMLParser.m; sourceTree = "<group>"; };
+		1DE044F8170111A000CC35DA /* OneSuggestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneSuggestion.h; sourceTree = "<group>"; };
+		1DE044F9170111A000CC35DA /* OneSuggestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneSuggestion.m; sourceTree = "<group>"; };
+		1DE044FD170111B900CC35DA /* QueryDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryDatabase.h; sourceTree = "<group>"; };
+		1DE044FE170111B900CC35DA /* QueryDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryDatabase.m; sourceTree = "<group>"; };
+		1DE04502170111E000CC35DA /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		1DE04505170111EE00CC35DA /* phaserDown3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = phaserDown3.mp3; sourceTree = "<group>"; };
+		1DE04506170111EE00CC35DA /* phaserUp2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = phaserUp2.mp3; sourceTree = "<group>"; };
+		1DE045091701130A00CC35DA /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		1DE0450B1701133000CC35DA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		1DE04535170114A100CC35DA /* PartyModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PartyModeViewController.h; sourceTree = "<group>"; };
+		1DE04536170114A100CC35DA /* PartyModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PartyModeViewController.m; sourceTree = "<group>"; };
+		1DE045381701177200CC35DA /* SoloModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoloModeViewController.h; sourceTree = "<group>"; };
+		1DE045391701177200CC35DA /* SoloModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoloModeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +105,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DE0450C1701133000CC35DA /* AVFoundation.framework in Frameworks */,
+				1DE0450A1701130A00CC35DA /* libsqlite3.dylib in Frameworks */,
 				1DE044B617010EF400CC35DA /* UIKit.framework in Frameworks */,
 				1DE044B817010EF400CC35DA /* Foundation.framework in Frameworks */,
 				1DE044BA17010EF400CC35DA /* CoreGraphics.framework in Frameworks */,
@@ -89,6 +129,8 @@
 		1DE044A917010EF400CC35DA = {
 			isa = PBXGroup;
 			children = (
+				1DE04500170111C400CC35DA /* Resources */,
+				1DE044F31701117300CC35DA /* Classes */,
 				1DE044BB17010EF400CC35DA /* Search Party */,
 				1DE044E217010EF500CC35DA /* Search PartyTests */,
 				1DE044B417010EF400CC35DA /* Frameworks */,
@@ -108,6 +150,8 @@
 		1DE044B417010EF400CC35DA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1DE0450B1701133000CC35DA /* AVFoundation.framework */,
+				1DE045091701130A00CC35DA /* libsqlite3.dylib */,
 				1DE044B517010EF400CC35DA /* UIKit.framework */,
 				1DE044B717010EF400CC35DA /* Foundation.framework */,
 				1DE044B917010EF400CC35DA /* CoreGraphics.framework */,
@@ -119,12 +163,16 @@
 		1DE044BB17010EF400CC35DA /* Search Party */ = {
 			isa = PBXGroup;
 			children = (
+				1DE04535170114A100CC35DA /* PartyModeViewController.h */,
+				1DE04536170114A100CC35DA /* PartyModeViewController.m */,
+				1DE045381701177200CC35DA /* SoloModeViewController.h */,
+				1DE045391701177200CC35DA /* SoloModeViewController.m */,
+				1DE044D317010EF400CC35DA /* ViewController.h */,
+				1DE044D417010EF400CC35DA /* ViewController.m */,
 				1DE044C417010EF400CC35DA /* AppDelegate.h */,
 				1DE044C517010EF400CC35DA /* AppDelegate.m */,
 				1DE044CD17010EF400CC35DA /* MainStoryboard_iPhone.storyboard */,
 				1DE044D017010EF400CC35DA /* MainStoryboard_iPad.storyboard */,
-				1DE044D317010EF400CC35DA /* ViewController.h */,
-				1DE044D417010EF400CC35DA /* ViewController.m */,
 				1DE044BC17010EF400CC35DA /* Supporting Files */,
 			);
 			path = "Search Party";
@@ -161,6 +209,45 @@
 				1DE044E517010EF500CC35DA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1DE044F31701117300CC35DA /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				1DE044FD170111B900CC35DA /* QueryDatabase.h */,
+				1DE044FE170111B900CC35DA /* QueryDatabase.m */,
+				1DE044F4170111A000CC35DA /* GoogleSuggestions.h */,
+				1DE044F5170111A000CC35DA /* GoogleSuggestions.m */,
+				1DE044F6170111A000CC35DA /* GoogleXMLParser.h */,
+				1DE044F7170111A000CC35DA /* GoogleXMLParser.m */,
+				1DE044F8170111A000CC35DA /* OneSuggestion.h */,
+				1DE044F9170111A000CC35DA /* OneSuggestion.m */,
+				1D4BBA5317012C0D00B53E63 /* SoundEffects.h */,
+				1D4BBA5417012C0D00B53E63 /* SoundEffects.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1DE04500170111C400CC35DA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1DCA78DE170BB315008B9C63 /* firstQueries.sqlite3 */,
+				1D4BBA561703D7D300B53E63 /* badQueries.sqlite3 */,
+				1DE04502170111E000CC35DA /* Constants.h */,
+				1DE04501170111D100CC35DA /* Sounds */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		1DE04501170111D100CC35DA /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				1DCA78E21710D105008B9C63 /* CD10.mp3 */,
+				1DCA78E01710BD34008B9C63 /* Loopy loop.mp3 */,
+				1DE04505170111EE00CC35DA /* phaserDown3.mp3 */,
+				1DE04506170111EE00CC35DA /* phaserUp2.mp3 */,
+			);
+			name = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -240,6 +327,12 @@
 				1DE044CC17010EF400CC35DA /* Default-568h@2x.png in Resources */,
 				1DE044CF17010EF400CC35DA /* MainStoryboard_iPhone.storyboard in Resources */,
 				1DE044D217010EF400CC35DA /* MainStoryboard_iPad.storyboard in Resources */,
+				1DE04507170111EE00CC35DA /* phaserDown3.mp3 in Resources */,
+				1DE04508170111EE00CC35DA /* phaserUp2.mp3 in Resources */,
+				1D4BBA571703D7D300B53E63 /* badQueries.sqlite3 in Resources */,
+				1DCA78DF170BB315008B9C63 /* firstQueries.sqlite3 in Resources */,
+				1DCA78E11710BD34008B9C63 /* Loopy loop.mp3 in Resources */,
+				1DCA78E31710D105008B9C63 /* CD10.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +370,13 @@
 				1DE044C217010EF400CC35DA /* main.m in Sources */,
 				1DE044C617010EF400CC35DA /* AppDelegate.m in Sources */,
 				1DE044D517010EF400CC35DA /* ViewController.m in Sources */,
+				1DE044FA170111A000CC35DA /* GoogleSuggestions.m in Sources */,
+				1DE044FB170111A000CC35DA /* GoogleXMLParser.m in Sources */,
+				1DE044FC170111A000CC35DA /* OneSuggestion.m in Sources */,
+				1DE044FF170111B900CC35DA /* QueryDatabase.m in Sources */,
+				1DE04537170114A100CC35DA /* PartyModeViewController.m in Sources */,
+				1DE0453A1701177300CC35DA /* SoloModeViewController.m in Sources */,
+				1D4BBA5517012C0D00B53E63 /* SoundEffects.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,6 +567,7 @@
 				1DE044EF17010EF500CC35DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1DE044F017010EF500CC35DA /* Build configuration list for PBXNativeTarget "Search PartyTests" */ = {
 			isa = XCConfigurationList;
@@ -475,6 +576,7 @@
 				1DE044F217010EF500CC35DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

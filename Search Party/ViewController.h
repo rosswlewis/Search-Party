@@ -9,5 +9,18 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
+{
+    NSUserDefaults * settings;
+    BOOL sound;
+    BOOL defaultPack;
+    SoundEffects * soundEffects;
+}
+
+@property (weak, nonatomic) IBOutlet UISwitch *SoundSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *DefaultSearchPackSwitch;
+
+- (IBAction)DefaultSearchPackChanged:(id)sender;
+- (IBAction)SoundChanged:(id)sender;
+
 
 @end
