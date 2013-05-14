@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "GoogleSuggestions.h"
+#import "Reachability.h"
+#import "DejalActivityView.h"
 
-@interface SoloModeViewController : UIViewController
+@interface SoloModeViewController : UIViewController <UIAlertViewDelegate> 
 {
     NSUserDefaults * streak;
     UIButton * correctButton;
@@ -22,10 +24,10 @@
     NSNumber * bestStreak;
     BOOL goNext;
     int queryQueued;
+    Reachability * testConnection;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *topSearchView;
-@property (strong, nonatomic) IBOutlet UIView *topSearchBottomBorder;
 @property (weak, nonatomic) IBOutlet UILabel *theSearchLabel;
 @property (weak, nonatomic) IBOutlet UILabel *theResultLabel;
 @property (weak, nonatomic) IBOutlet UIButton *buttonOne;
@@ -34,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *buttonNext;
 @property (weak, nonatomic) IBOutlet UILabel *currentStreakLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bestStreakLabel;
+@property (weak, nonatomic) IBOutlet UIButton *buttonBack;
 
 - (IBAction)buttonSuccessClick:(id)sender;
 - (IBAction)buttonFailClick:(id)sender;

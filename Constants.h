@@ -42,15 +42,28 @@
 
 #define TIME_BETWEEN         5.0
 
-#define BEST_STREAK_SAVE     @"bestStreak"
+#define BEST_STREAK_S        @"bestStreak"
+#define SOUND_S              @"soundSave"
+#define SOUND_EFFECTS_S      @"soundEffectsSave"
+#define DEFAULT_PACK_S       @"defaultPackSave"
+#define POP_PACK_S           @"popPackSave"
+#define POP_PACK_PURCHASED_S @"popPackPurchasedSave"
 
-#define SOUND_SAVE           @"soundSave"
-#define DEFAULT_PACK         @"defaultPackSave"
+#define POP_PACK_IDENTIFIER  @"PopCultureSearchPack"
 
 #define ALL_PACKS_OFF_TITLE  @"Wait!"
 #define ALL_PACKS_OFF_MESS   @"You need to have at least one search pack on to play"
 #define ALL_PACKS_OFF_OK     @"OK"
 
-#define DEFAULT_PACK_NAME    @"default"
+#define DEFAULT_PACK_DBNAME  @"default"
+#define POP_PACK_DBNAME      @"pop"
+
+#define CONNECT              @"Connection Error"
+#define CONNECT_MESSAGE      @"Please connect to the internet to play"
+
+#define CANCEL               @"Cancel"
+
+#define PAYMENTS_OFF_TITLE   @"Payments are turned off!"
+#define PAYMENTS_OFF_MESG    @"Purchases are disabled for this device."
 
 #endif

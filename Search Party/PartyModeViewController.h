@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "GoogleSuggestions.h"
+#import "Reachability.h"
+#import "DejalActivityView.h"
 
-@interface PartyModeViewController : UIViewController
+@interface PartyModeViewController : UIViewController <UIAlertViewDelegate> 
 {
     UIButton * correctButton;
     SoundEffects * soundEffects;
@@ -20,6 +22,8 @@
     GoogleSuggestions *suggestions;
     float blueTeamCorrectAnswers;
     float redTeamCorrectAnswers;
+    Reachability * testConnection;
+    UIImageView * teamColorImageView;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *theSearchLabel;

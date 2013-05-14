@@ -29,7 +29,7 @@
 }
 
 -(void)PlaySoundGameButtonSuccess{
-    if([self SoundOn]){
+    if([self SoundEffectsOn]){
         NSString *path = [[NSBundle mainBundle] pathForResource: SUCCESS_SOUND ofType:MP3];
         audio =[[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
         audio.delegate = self;
@@ -38,7 +38,7 @@
 }
 
 -(void)PlaySoundGameButtonFailure{
-    if([self SoundOn]){
+    if([self SoundEffectsOn]){
         NSString *path = [[NSBundle mainBundle] pathForResource: FAILED_SOUND ofType:MP3];
         audio =[[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
         audio.delegate = self;
@@ -48,10 +48,19 @@
 
 -(BOOL)SoundOn{
     settings = [NSUserDefaults standardUserDefaults];
-    if([settings objectForKey:SOUND_SAVE] == nil){
+    if([settings objectForKey:SOUND_S] == nil){
         return YES;
     }else{
-        return [settings boolForKey:SOUND_SAVE];
+        return [settings boolForKey:SOUND_S];
+    }
+}
+
+-(BOOL)SoundEffectsOn{
+    settings = [NSUserDefaults standardUserDefaults];
+    if([settings objectForKey:SOUND_EFFECTS_S] == nil){
+        return YES;
+    }else{
+        return [settings boolForKey:SOUND_EFFECTS_S];
     }
 }
 

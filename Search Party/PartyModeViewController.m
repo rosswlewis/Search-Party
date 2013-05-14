@@ -29,6 +29,18 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.view.backgroundColor = [UIColor clearColor];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Background.png"]];
+    
+    //UIImageView *teamColorImageView;
+    UIImage * settingsImage = [UIImage imageNamed:@"RedGradient.png"];
+    teamColorImageView=[[UIImageView alloc]initWithImage:settingsImage];// take image size according to view
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    teamColorImageView.frame = CGRectMake(0,0,screenWidth,screenHeight);
+    [self.view insertSubview:teamColorImageView atIndex:0];
+    
     // get all of the queries from the sqlite3 file and use one of them
     queryArray = [[NSMutableArray alloc] init];
     queryArray = [QueryDatabase database].queries;
@@ -63,20 +75,53 @@
 {
     if(redTeam){
         [self.theResultLabel setText:RED_TEAM];
+        UIImage * backImage = [UIImage imageNamed:@"RedGradient.png"];
+        [teamColorImageView setImage:backImage];
+        //self.view.backgroundColor = [UIColor clearColor];
+        //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"RedGradient.png"]];
     }else{
         [self.theResultLabel setText:BLUE_TEAM];
+        UIImage * backImage = [UIImage imageNamed:@"BlueGradient.png"];
+        [teamColorImageView setImage:backImage];
+        //self.view.backgroundColor = [UIColor clearColor];
+        //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BlueGradient.png"]];
     }
     if(!([queryArray count] < 1)){
-        // set the buttons and such
-        int random = arc4random() % [queryArray count];
-        NSString * theQuery = [queryArray objectAtIndex:random];
-        [self SetButtonTextAndClick:theQuery];
-        [queryArray removeObjectAtIndex:random];
+        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading Suggestions" width:150];
+        
+        [self performSelector: @selector(SetupNewSearch) withObject:nil afterDelay:.1];
     }else{
         queryArray = [[NSMutableArray alloc] init];
         queryArray = [QueryDatabase database].queries;
         
         [self StartANewSearch];
+    }
+}
+
+-(void) SetupNewSearch
+{
+    //testConnection = [Reachability reachabilityWithHostname:@"www.google.com"];
+    testConnection = [Reachability reachabilityForInternetConnection];
+    [testConnection startNotifier];
+    
+    NetworkStatus remoteHostStatus = [testConnection currentReachabilityStatus];
+    
+    if(remoteHostStatus == NotReachable) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:CONNECT
+                                                        message:CONNECT_MESSAGE
+                                                       delegate:self
+                                              cancelButtonTitle:ALL_PACKS_OFF_OK
+                                              otherButtonTitles:nil];
+        [alert show];
+        [DejalBezelActivityView removeViewAnimated:YES];
+        return;
+    }else{
+        // set the buttons and such
+        int random = arc4random() % [queryArray count];
+        NSString * theQuery = [queryArray objectAtIndex:random];
+        [self SetButtonTextAndClick:theQuery];
+        [queryArray removeObjectAtIndex:random];
+        [DejalBezelActivityView removeViewAnimated:YES];
     }
 }
 
@@ -103,7 +148,7 @@
             [self viewDidLoad];
             return;
         }
-        [self.theResultLabel setText:[NSString stringWithFormat:@"%@  %@",[successArray objectAtIndex:arc4random() % [successArray count]], RED_TEAM_UP]];
+        [self.theResultLabel setText:[NSString stringWithFormat:@"%@  %@",[successArray objectAtIndex:arc4random() % [successArray count]], BLUE_TEAM_UP]];
         [self.redTeamProgress setProgress:redTeamCorrectAnswers animated:YES];
     }else{
         blueTeamCorrectAnswers += .2;
@@ -140,6 +185,10 @@
     redTeam = !redTeam;
     [self ClearButtonsEvents];
     
+    [self performSelector:@selector(StartANewSearch) withObject:nil afterDelay:TIME_BETWEEN];
+}
+
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     [self performSelector:@selector(StartANewSearch) withObject:nil afterDelay:TIME_BETWEEN];
 }
 
