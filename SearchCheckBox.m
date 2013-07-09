@@ -19,12 +19,12 @@
         if(check){
             //@"Very-Basic-Checked-checkbox-icon.png"
             [self setImage:[UIImage imageNamed:
-                            @"CheckedBox.png"]
+                            @"On_check.png"]
                   forState:UIControlStateNormal];
         }else{
             //@"Very-Basic-Unchecked-checkbox-icon.png"
             [self setImage:[UIImage imageNamed:
-                            @"CheckBoxUncheckd.png"]
+                            @"off_check.png"]
                   forState:UIControlStateNormal];
         }
         self.isChecked = check;
@@ -37,13 +37,13 @@
     if(self.isChecked ==NO){
         self.isChecked =YES;
         [self setImage:[UIImage imageNamed:
-                        @"CheckedBox.png"]
+                        @"On_check.png"]
               forState:UIControlStateNormal];
         
     }else{
         self.isChecked =NO;
         [self setImage:[UIImage imageNamed:
-                        @"CheckBoxUncheckd.png"]
+                        @"off_check.png"]
               forState:UIControlStateNormal];
         
     }
