@@ -48,8 +48,11 @@
 #define DEFAULT_PACK_S       @"defaultPackSave"
 #define POP_PACK_S           @"popPackSave"
 #define POP_PACK_PURCHASED_S @"popPackPurchasedSave"
+#define CELEB_PACK_S         @"celebPackSave"
+#define CELEB_PACK_PURCHASED_S @"celebPackPurchasedSave"
 
 #define POP_PACK_IDENTIFIER  @"PopCultureSearchPack"
+#define CELEB_PACK_IDENTIFIER @"CelebritySearchPack"
 
 #define ALL_PACKS_OFF_TITLE  @"Wait!"
 #define ALL_PACKS_OFF_MESS   @"You need to have at least one search pack on to play"
@@ -57,6 +60,7 @@
 
 #define DEFAULT_PACK_DBNAME  @"default"
 #define POP_PACK_DBNAME      @"pop"
+#define CELEB_PACK_DBNAME    @"celeb"
 
 #define CONNECT              @"Connection Error"
 #define CONNECT_MESSAGE      @"Please connect to the internet to play"
@@ -65,5 +69,7 @@
 
 #define PAYMENTS_OFF_TITLE   @"Payments are turned off!"
 #define PAYMENTS_OFF_MESG    @"Purchases are disabled for this device."
+
+#define CREDIT_IMG           @"credits_Search-Party-1.png"
 
 #endif
