@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <StoreKit/StoreKit.h>
 
-@interface CelebPackPurchases : UIAlertView
+@interface CelebPackPurchases : UIAlertView{
+    NSArray * products;
+}
+
+-(void)ShowAlert: (NSArray*)myProducts;
 
 @end
