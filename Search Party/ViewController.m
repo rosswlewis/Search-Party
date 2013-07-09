@@ -33,14 +33,14 @@
     
     //this is the how to play image, it will need some work
     UIImageView *settingsImageView;
-    UIImage * settingsImage = [UIImage imageNamed:@"howtocredit.png"];
+    UIImage * settingsImage = [UIImage imageNamed:CREDIT_IMG];
     settingsImageView=[[UIImageView alloc]initWithImage:settingsImage];// take image size according to view
     settingsImageView.frame = CGRectMake(
-                                 0,0, 280, 497);
+                                 0,0, 280, 750);
     [self.SettingsScroller addSubview:settingsImageView];
     
     self.SettingsScroller.scrollEnabled = YES;
-    self.SettingsScroller.contentSize = CGSizeMake(280,497);
+    self.SettingsScroller.contentSize = CGSizeMake(280,750);
     
     //set sound switch
     if([settings objectForKey:SOUND_S] == nil){
@@ -75,6 +75,7 @@
         defaultPack = [settings boolForKey:DEFAULT_PACK_S];
     }
     
+    //get and set pop pack
     if([settings objectForKey:POP_PACK_PURCHASED_S] == nil){
         popPackPurchased = NO;
     }else{
@@ -93,6 +94,26 @@
         popPack = NO;
     }
     [self.PopSearchPackCheck initWithFrameAndCheck:CGRectMake(0, 0, 32, 32) checked:popPack];
+    
+    //get and set celeb pack
+    if([settings objectForKey:CELEB_PACK_PURCHASED_S] == nil){
+        celebPackPurchased = NO;
+    }else{
+        celebPackPurchased = [settings boolForKey:CELEB_PACK_PURCHASED_S];
+    }
+    
+    //UNCOMMENT WHEN PURCHASES ARE ACTIVE
+    if(celebPackPurchased){
+        //set pop pack check
+        if([settings objectForKey:CELEB_PACK_S] == nil){
+            celebPack = YES;
+        }else{
+            celebPack = [settings boolForKey:CELEB_PACK_S];
+        }
+    }else{
+        celebPack = NO;
+    }
+    [self.CelebritySearchPackCheck initWithFrameAndCheck:CGRectMake(0, 0, 32, 32) checked:celebPack];
     
     if([self AllPacksOff]){
         defaultPack = YES;
@@ -157,6 +178,40 @@
     }
 }
 
+- (IBAction)CelebritySearchPackChanged:(id)sender {
+    settings = [NSUserDefaults standardUserDefaults];
+    if([settings objectForKey:CELEB_PACK_PURCHASED_S] == nil){
+        celebPackPurchased = NO;
+    }else{
+        celebPackPurchased = [settings boolForKey:CELEB_PACK_PURCHASED_S];
+    }
+    
+    if(celebPackPurchased){
+        //if(YES){
+        celebPack = ![self.CelebritySearchPackCheck isChecked];
+        if(![self AllPacksOff])
+        {
+            [self.CelebritySearchPackCheck checkBoxClicked];
+            settings = [NSUserDefaults standardUserDefaults];
+            [settings setBool:celebPack forKey:CELEB_PACK_S];
+        }else{
+            celebPack = YES;
+            
+            [self ShowAllPackOffAlert];
+        }
+    }else{
+        if ([SKPaymentQueue canMakePayments]) {
+            // Display a store to the user.
+            //have a popup "buy this search pack? 99c
+            celebPackPurchase = [CelebPackPurchases alloc];
+            [celebPackPurchase ShowAlert: myProducts];
+        } else {
+            [self ShowPaymentsTurnedOffAlert];
+        }
+    }
+
+}
+
 - (IBAction)DefaultSearchPackChanged:(id)sender {
     defaultPack = ![self.DefaultSearchPackCheck isChecked];
     if(![self AllPacksOff])
@@ -172,7 +227,7 @@
 }
 
 -(BOOL)AllPacksOff{
-    if(!defaultPack && !popPack){
+    if(!defaultPack && !popPack && !celebPack){
         return YES;
     }
     return NO;
@@ -182,7 +237,7 @@
 - (void) requestProductData
 {
     SKProductsRequest *request= [[SKProductsRequest alloc] initWithProductIdentifiers:
-                                 [NSSet setWithObjects: POP_PACK_IDENTIFIER, nil]];
+                                 [NSSet setWithObjects: POP_PACK_IDENTIFIER, CELEB_PACK_IDENTIFIER, nil]];
     request.delegate = self;
     [request start];
 }

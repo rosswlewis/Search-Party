@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/SoloModeViewController.m"
-         timestampString = "389519802.431676"
+         timestampString = "392860464.583099"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "95"
-         endingLineNumber = "95"
+         startingLineNumber = "109"
+         endingLineNumber = "109"
          landmarkName = "-StartANewSearch:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/SoloModeViewController.m"
-         timestampString = "389519802.431676"
+         timestampString = "392860464.583099"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "103"
-         endingLineNumber = "103"
+         startingLineNumber = "117"
+         endingLineNumber = "117"
          landmarkName = "-StartANewSearch:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/SoloModeViewController.m"
-         timestampString = "389519802.431676"
+         timestampString = "392860464.583099"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "97"
-         endingLineNumber = "97"
+         startingLineNumber = "111"
+         endingLineNumber = "111"
          landmarkName = "-StartANewSearch:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/SoloModeViewController.m"
-         timestampString = "389519802.431676"
+         timestampString = "392860464.583099"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "172"
-         endingLineNumber = "172"
+         startingLineNumber = "184"
+         endingLineNumber = "184"
          landmarkName = "-buttonSuccessClick:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/SoloModeViewController.m"
-         timestampString = "389519802.431676"
+         timestampString = "392860464.583099"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "173"
-         endingLineNumber = "173"
+         startingLineNumber = "185"
+         endingLineNumber = "185"
          landmarkName = "-buttonSuccessClick:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -86,11 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/SoloModeViewController.m"
-         timestampString = "389473110.166715"
+         timestampString = "392860464.583099"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "37"
-         endingLineNumber = "37"
+         startingLineNumber = "39"
+         endingLineNumber = "39"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -151,11 +151,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/SoloModeViewController.m"
-         timestampString = "389519802.431676"
+         timestampString = "392860464.583099"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "106"
-         endingLineNumber = "106"
+         startingLineNumber = "120"
+         endingLineNumber = "120"
          landmarkName = "-StartANewSearch:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -164,11 +164,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/SoloModeViewController.m"
-         timestampString = "389519802.431676"
+         timestampString = "392860464.583099"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "108"
-         endingLineNumber = "108"
+         startingLineNumber = "122"
+         endingLineNumber = "122"
          landmarkName = "-StartANewSearch:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -177,11 +177,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/SoloModeViewController.m"
-         timestampString = "389519802.431676"
+         timestampString = "392860464.583099"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "117"
-         endingLineNumber = "117"
+         startingLineNumber = "131"
+         endingLineNumber = "131"
          landmarkName = "-StartANewSearch:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -190,11 +190,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/SoloModeViewController.m"
-         timestampString = "389519802.431676"
+         timestampString = "392860464.583099"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "121"
-         endingLineNumber = "121"
+         startingLineNumber = "135"
+         endingLineNumber = "135"
          landmarkName = "-SetupNewSearch"
          landmarkType = "5">
       </FileBreakpoint>
@@ -281,11 +281,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/ViewController.m"
-         timestampString = "390179237.48623"
+         timestampString = "390441809.398565"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "149"
-         endingLineNumber = "149"
+         startingLineNumber = "170"
+         endingLineNumber = "170"
          landmarkName = "-PopSearchPackChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -294,11 +294,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/ViewController.m"
-         timestampString = "390179237.48623"
+         timestampString = "390441809.398565"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "155"
-         endingLineNumber = "155"
+         startingLineNumber = "176"
+         endingLineNumber = "176"
          landmarkName = "-PopSearchPackChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -307,11 +307,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/ViewController.m"
-         timestampString = "390179237.48623"
+         timestampString = "390441809.398565"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "154"
-         endingLineNumber = "154"
+         startingLineNumber = "175"
+         endingLineNumber = "175"
          landmarkName = "-PopSearchPackChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -320,11 +320,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/ViewController.m"
-         timestampString = "390179237.48623"
+         timestampString = "390441809.398565"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "137"
-         endingLineNumber = "137"
+         startingLineNumber = "158"
+         endingLineNumber = "158"
          landmarkName = "-PopSearchPackChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -333,11 +333,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/ViewController.m"
-         timestampString = "390179237.48623"
+         timestampString = "390441809.398565"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "142"
-         endingLineNumber = "142"
+         startingLineNumber = "163"
+         endingLineNumber = "163"
          landmarkName = "-PopSearchPackChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -346,11 +346,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/ViewController.m"
-         timestampString = "390179237.48623"
+         timestampString = "390441809.398565"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "153"
-         endingLineNumber = "153"
+         startingLineNumber = "174"
+         endingLineNumber = "174"
          landmarkName = "-PopSearchPackChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -385,11 +385,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/ViewController.m"
-         timestampString = "390199564.748216"
+         timestampString = "390441809.398565"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "187"
-         endingLineNumber = "187"
+         startingLineNumber = "242"
+         endingLineNumber = "242"
          landmarkName = "-requestProductData"
          landmarkType = "5">
       </FileBreakpoint>
@@ -398,11 +398,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/ViewController.m"
-         timestampString = "390199570.180308"
+         timestampString = "390441809.398565"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "192"
-         endingLineNumber = "192"
+         startingLineNumber = "247"
+         endingLineNumber = "247"
          landmarkName = "-productsRequest:didReceiveResponse:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -411,11 +411,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/ViewController.m"
-         timestampString = "390199772.126013"
+         timestampString = "390441809.398565"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "128"
-         endingLineNumber = "128"
+         startingLineNumber = "149"
+         endingLineNumber = "149"
          landmarkName = "-PopSearchPackChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -437,11 +437,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/ViewController.m"
-         timestampString = "390199874.301224"
+         timestampString = "390441809.398565"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "152"
-         endingLineNumber = "152"
+         startingLineNumber = "173"
+         endingLineNumber = "173"
          landmarkName = "-PopSearchPackChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -510,13 +510,50 @@
          landmarkName = "-paymentQueue:updatedTransactions:"
          landmarkType = "5">
       </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "QueryDatabase.m"
+         timestampString = "390860097.990843"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "77"
+         endingLineNumber = "77"
+         landmarkName = "-queries"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Search Party/SoloModeViewController.m"
+         timestampString = "392860464.583099"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "110"
+         endingLineNumber = "110"
+         landmarkName = "-StartANewSearch:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Search Party/SoloModeViewController.m"
+         timestampString = "392860464.583099"
+         startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "116"
          endingLineNumber = "116"
          landmarkName = "-StartANewSearch:"
+         landmarkType = "5">
       </FileBreakpoint>
+      <FileBreakpoint
          shouldBeEnabled = "No"
+         ignoreCount = "0"
          continueAfterRunningActions = "No"
+         filePath = "Search Party/SoloModeViewController.h"
          timestampString = "392855824.358959"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
