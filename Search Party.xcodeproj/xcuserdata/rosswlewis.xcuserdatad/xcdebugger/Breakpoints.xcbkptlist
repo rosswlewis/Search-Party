@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Search Party/SoloModeViewController.m"
-         timestampString = "389519802.431676"
+         timestampString = "392860464.583099"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "104"
-         endingLineNumber = "104"
+         startingLineNumber = "118"
+         endingLineNumber = "118"
          landmarkName = "-StartANewSearch:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -509,6 +509,21 @@
          endingLineNumber = "25"
          landmarkName = "-paymentQueue:updatedTransactions:"
          landmarkType = "5">
+      </FileBreakpoint>
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "116"
+         endingLineNumber = "116"
+         landmarkName = "-StartANewSearch:"
+      </FileBreakpoint>
+         shouldBeEnabled = "No"
+         continueAfterRunningActions = "No"
+         timestampString = "392855824.358959"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "27"
+         endingLineNumber = "27"
+         landmarkName = "@interface SoloModeViewController"
+         landmarkType = "2">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

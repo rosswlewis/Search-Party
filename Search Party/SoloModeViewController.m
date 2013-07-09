@@ -15,6 +15,9 @@
 
 @implementation SoloModeViewController
 
+//this was in the header but i made it static and that seemed to fix the problem.....
+static int queryQueued;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -43,7 +46,7 @@
     currentStreak = [[NSNumber alloc]init];
     bestStreak = [[NSNumber alloc]init];
     goNext = YES;
-    queryQueued = 1;
+    queryQueued = 0;
     soundEffects = [[SoundEffects alloc] init];
     
     //load the highest streak
@@ -84,8 +87,20 @@
     [failureArray addObject:SOLO_WRONG2];
     
     //[DejalBezelActivityView removeViewAnimated:YES];
+    CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        if (screenSize.height > 480.0f) {
+            /*Do iPhone 5 stuff here.*/
+        } else {
+            /*Do iPhone Classic stuff here.*/
+            [self.soloModePicture removeFromSuperview];
+            [self.soloModeText removeFromSuperview];
+        }
+    } else {
+        /*Do iPad stuff here.*/
+    }
     
-    [self StartANewSearch:NO];
+    [self StartANewSearch:YES];
 }
 
 -(void)StartANewSearch:(BOOL) fromNext
@@ -111,7 +126,7 @@
             queryArray = [[NSMutableArray alloc] init];
             queryArray = [QueryDatabase database].queries;
             
-            [self StartANewSearch:NO];
+            [self StartANewSearch:YES];
         }
     }
 }
@@ -165,13 +180,13 @@
 }
 
 - (void)buttonSuccessClick:(id)sender {
-    [soundEffects PlaySoundGameButtonSuccess];
-    [sender setBackgroundColor:[UIColor greenColor]];
-    
+    queryQueued++;
     [self ClearButtonsEvents];
     [self.theResultLabel setText:[successArray objectAtIndex:arc4random() % [successArray count]]];
     goNext = YES;
-    queryQueued++;
+    
+    [soundEffects PlaySoundGameButtonSuccess];
+    [sender setBackgroundColor:[UIColor greenColor]];    
     currentStreak = [NSNumber numberWithInt:[currentStreak intValue] + 1];
     [self.currentStreakLabel setText:[currentStreak stringValue]];
     if([currentStreak intValue] > [bestStreak intValue]){
@@ -186,18 +201,18 @@
 }
 
 - (void)buttonFailClick:(id)sender{
+    queryQueued++;
+    [self ClearButtonsEvents];
+    [self.theResultLabel setText:[failureArray objectAtIndex:arc4random() % [failureArray count]]];
+    goNext = YES;
+    
     [soundEffects PlaySoundGameButtonFailure];
     [sender setBackgroundColor:[UIColor redColor]];
     [correctButton setBackgroundColor:[UIColor greenColor]];
-    
-    [self.theResultLabel setText:[failureArray objectAtIndex:arc4random() % [failureArray count]]];
-    goNext = YES;
-    queryQueued++;
     currentStreak = [NSNumber numberWithInt:0];
     [self.currentStreakLabel setText:[currentStreak stringValue]];
     [self.buttonNext setEnabled:YES];
     [self.buttonNext setBackgroundImage:[UIImage imageNamed:@"NextSearch.png"] forState:UIControlStateNormal];
-    [self ClearButtonsEvents];
     [self performSelector:@selector(StartANewSearch:) withObject:NO afterDelay:TIME_BETWEEN];
 }
 

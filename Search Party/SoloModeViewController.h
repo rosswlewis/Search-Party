@@ -23,10 +23,12 @@
     NSNumber * currentStreak;
     NSNumber * bestStreak;
     BOOL goNext;
-    int queryQueued;
+    //int queryQueued;
     Reachability * testConnection;
 }
 
+@property (weak, nonatomic) IBOutlet UIImageView *soloModePicture;
+@property (weak, nonatomic) IBOutlet UILabel *soloModeText;
 @property (weak, nonatomic) IBOutlet UIView *topSearchView;
 @property (weak, nonatomic) IBOutlet UILabel *theSearchLabel;
 @property (weak, nonatomic) IBOutlet UILabel *theResultLabel;

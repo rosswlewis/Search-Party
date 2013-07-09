@@ -26,6 +26,8 @@
     UIImageView * teamColorImageView;
 }
 
+@property (weak, nonatomic) IBOutlet UILabel *partyModeText;
+@property (weak, nonatomic) IBOutlet UIImageView *partyModePicture;
 @property (weak, nonatomic) IBOutlet UILabel *theSearchLabel;
 @property (weak, nonatomic) IBOutlet UILabel *theResultLabel;
 @property (weak, nonatomic) IBOutlet UIButton *buttonOne;

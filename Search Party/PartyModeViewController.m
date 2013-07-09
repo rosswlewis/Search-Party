@@ -33,7 +33,7 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Background.png"]];
     
     //UIImageView *teamColorImageView;
-    UIImage * settingsImage = [UIImage imageNamed:@"RedGradient.png"];
+    UIImage * settingsImage = [UIImage imageNamed:@"Search-Party_Red.png"];
     teamColorImageView=[[UIImageView alloc]initWithImage:settingsImage];// take image size according to view
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
@@ -44,13 +44,7 @@
     // get all of the queries from the sqlite3 file and use one of them
     queryArray = [[NSMutableArray alloc] init];
     queryArray = [QueryDatabase database].queries;
-    redTeam = YES;
     soundEffects = [[SoundEffects alloc] init];
-    [self.redTeamProgress setProgress:0];
-    [self.blueTeamProgress setProgress:0];
-    blueTeamCorrectAnswers = 0;
-    redTeamCorrectAnswers = 0;
-    [self.theResultLabel setText:RED_TEAM];
     
     successArray = [[NSMutableArray alloc]init];
     failureArray = [[NSMutableArray alloc]init];
@@ -68,6 +62,31 @@
     [[self.buttonThree layer] setBorderWidth:1.0f];
     [[self.buttonThree layer] setBorderColor:[UIColor blackColor].CGColor];
     
+    CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        if (screenSize.height > 480.0f) {
+            /*Do iPhone 5 stuff here.*/
+        } else {
+            /*Do iPhone Classic stuff here.*/
+            [self.partyModeText removeFromSuperview];
+            [self.partyModePicture removeFromSuperview];
+        }
+    } else {
+        /*Do iPad stuff here.*/
+    }
+    
+    [self FreshGame];
+}
+
+-(void)FreshGame{
+    redTeam = YES;
+    [self.redTeamProgress setProgress:0];
+    [self.blueTeamProgress setProgress:0];
+    blueTeamCorrectAnswers = 0;
+    redTeamCorrectAnswers = 0;
+    [self.theResultLabel setText:RED_TEAM];
+    
     [self StartANewSearch];
 }
 
@@ -75,13 +94,13 @@
 {
     if(redTeam){
         [self.theResultLabel setText:RED_TEAM];
-        UIImage * backImage = [UIImage imageNamed:@"RedGradient.png"];
+        UIImage * backImage = [UIImage imageNamed:@"Search-Party_Red.png"];
         [teamColorImageView setImage:backImage];
         //self.view.backgroundColor = [UIColor clearColor];
         //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"RedGradient.png"]];
     }else{
         [self.theResultLabel setText:BLUE_TEAM];
-        UIImage * backImage = [UIImage imageNamed:@"BlueGradient.png"];
+        UIImage * backImage = [UIImage imageNamed:@"Search-Party_blue.png"];
         [teamColorImageView setImage:backImage];
         //self.view.backgroundColor = [UIColor clearColor];
         //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BlueGradient.png"]];
@@ -145,7 +164,7 @@
                                                   cancelButtonTitle:NEW_GAME
                                                   otherButtonTitles:nil];
             [alert show];
-            [self viewDidLoad];
+            [self performSelector:@selector(FreshGame) withObject:nil afterDelay:TIME_BETWEEN];
             return;
         }
         [self.theResultLabel setText:[NSString stringWithFormat:@"%@  %@",[successArray objectAtIndex:arc4random() % [successArray count]], BLUE_TEAM_UP]];
@@ -159,7 +178,7 @@
                                                   cancelButtonTitle:NEW_GAME
                                                   otherButtonTitles:nil];
             [alert show];
-            [self viewDidLoad];
+            [self performSelector:@selector(FreshGame) withObject:nil afterDelay:TIME_BETWEEN];
             return;
         }
         [self.theResultLabel setText:[NSString stringWithFormat:@"%@  %@",[successArray objectAtIndex:arc4random() % [successArray count]], RED_TEAM_UP]];

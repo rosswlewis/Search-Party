@@ -41,20 +41,36 @@ static QueryDatabase *_database;
     
     NSString *query = @"SELECT query FROM queries where pack in (";
     settings = [NSUserDefaults standardUserDefaults];
+    int packCount = 0;
     
     if([settings objectForKey:DEFAULT_PACK_S] == nil){
         query = [query stringByAppendingFormat:@"'%@',",DEFAULT_PACK_DBNAME];
     }else{
         if([settings boolForKey:DEFAULT_PACK_S])
+        {
             query = [query stringByAppendingFormat:@"'%@',",DEFAULT_PACK_DBNAME];
+            packCount++;
+        }
     }
     
-    if([settings objectForKey:POP_PACK_S] == nil){
-        query = [query stringByAppendingFormat:@"'%@',",POP_PACK_DBNAME];
-    }else{
+    if([settings objectForKey:POP_PACK_S] != nil){
         if([settings boolForKey:POP_PACK_S])
+        {
             query = [query stringByAppendingFormat:@"'%@',",POP_PACK_DBNAME];
+            packCount++;
+        }
     }
+    
+    if([settings objectForKey:CELEB_PACK_S] != nil){
+        if([settings boolForKey:CELEB_PACK_S])
+        {
+            query = [query stringByAppendingFormat:@"'%@',",CELEB_PACK_DBNAME];
+            packCount++;
+        }
+    }
+    
+    if(packCount == 0)
+        query = [query stringByAppendingFormat:@"'%@',",DEFAULT_PACK_DBNAME];
     
     query = [query stringByAppendingString:@"'')"];
     

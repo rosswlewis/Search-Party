@@ -41,6 +41,10 @@
         [self updateUserDefaultsAfterPurchase:POP_PACK_PURCHASED_S];
         //CALL BUTTON CLICK IN VIEW CONTROLLER
         [self showPopupForPurchaseSuccess];
+    }else if([transaction.originalTransaction.payment.productIdentifier isEqual: CELEB_PACK_IDENTIFIER]){
+        [self updateUserDefaultsAfterPurchase:CELEB_PACK_PURCHASED_S];
+        //CALL BUTTON CLICK IN VIEW CONTROLLER
+        [self showPopupForPurchaseSuccess];
     }
     
     // Remove the transaction from the payment queue.
@@ -68,14 +72,18 @@
         [self updateUserDefaultsAfterPurchase:POP_PACK_PURCHASED_S];
         //CALL BUTTON CLICK IN VIEW CONTROLLER
         [self showPopupForPurchaseSuccess];
+    }else if([transaction.originalTransaction.payment.productIdentifier isEqual: CELEB_PACK_IDENTIFIER]){
+        [self updateUserDefaultsAfterPurchase:CELEB_PACK_PURCHASED_S];
+        //CALL BUTTON CLICK IN VIEW CONTROLLER
+        [self showPopupForPurchaseSuccess];
     }
     
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
 }
 
 - (void) showPopupForPurchaseSuccess{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"An error has occured"
-                                                    message:@"Sorry!  Your purchase could not be made at this time."
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!"
+                                                    message:@"You got it!  Your purchase is complete!  Go ahead and select your search pack to use it."
                                                    delegate:nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
