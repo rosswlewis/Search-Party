@@ -7,6 +7,11 @@
 //
 
 #import "ViewController.h"
+#define SYSTEM_VERSION_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+#define SYSTEM_VERSION_GREATER_THAN(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 
 @interface ViewController ()
 
@@ -20,16 +25,45 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     //load
-    self.view.backgroundColor = [UIColor clearColor];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Background.png"]];
+    self.view.backgroundColor = [UIColor whiteColor];
+    UIImage * backImg;
+    CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        if (screenSize.height > 480.0f) {
+            /*Do iPhone 5 stuff here.*/
+            backImg = [UIImage imageNamed:@"SearchParty_Background_Yellow_640x1136.png"];
+        } else {
+            /*Do iPhone Classic stuff here.*/
+            backImg = [UIImage imageNamed:@"SearchParty_Background_Yellow_640x960.png"];
+        }
+    } else {
+        /*Do iPad stuff here.*/
+    }
+    backgroundImage=[[UIImageView alloc]initWithImage:backImg];// take image size according to view
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    backgroundImage.frame = CGRectMake(0,0,screenWidth,screenHeight);
+    backgroundImage.alpha = .3;
+    [self.view insertSubview:backgroundImage atIndex:0];
+    
     soundEffects = [[SoundEffects alloc] init];
     settings = [NSUserDefaults standardUserDefaults];
+    howLongLoading = 0;
     
     //Get what's purchasable on the app store
     [self requestProductData];
     observer = [[MyStoreObserver alloc] init];
-    [observer setProducts:myProducts];
+    //[observer setDelegate:self];
+    [observer setProducts:myProducts CorrectViewController:self];
     [[SKPaymentQueue defaultQueue] addTransactionObserver:observer];
+    
+    if(SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(@"5.0")){
+        [self.CorrectStaticText setFont:[UIFont fontWithName:[[self.CorrectStaticText font] familyName] size:11]];
+        [self.IncorrectStaticText setFont:[UIFont fontWithName:[[self.IncorrectStaticText font] familyName] size:11]];
+        [self.MainMenuSearchPartyText setFont:[UIFont fontWithName:[[self.MainMenuSearchPartyText font] familyName] size:30]];
+        [self.GamePickerSearchPartyText setFont:[UIFont fontWithName:[[self.GamePickerSearchPartyText font] familyName] size:30]];
+    }
     
     //this is the how to play image, it will need some work
     UIImageView *settingsImageView;
@@ -44,7 +78,7 @@
     
     //set sound switch
     if([settings objectForKey:SOUND_S] == nil){
-        sound = YES;
+        sound = NO;
     }else{
         sound = [settings boolForKey:SOUND_S];
     }
@@ -62,13 +96,23 @@
         [soundEffects PlayBackgroundMusic];
     }
     
-    //set default pack check
-    if([settings objectForKey:DEFAULT_PACK_S] == nil){
-        defaultPack = YES;
+    //set incorrect answers
+    if([settings objectForKey:INCORRECT_ANS_S] == nil){
+        incorrectAns = [NSNumber numberWithInt:0];
     }else{
-        defaultPack = [settings boolForKey:DEFAULT_PACK_S];
+        incorrectAns = [settings objectForKey:INCORRECT_ANS_S];
     }
+    [self.IncorrectAnsLabel setText: [incorrectAns stringValue]];
     
+    //set correct answers
+    if([settings objectForKey:CORRECT_ANS_S] == nil){
+        correctAns = [NSNumber numberWithInt:0];
+    }else{
+        correctAns = [settings objectForKey:CORRECT_ANS_S];
+    }
+    [self.CorrectAnsLabel setText: [correctAns stringValue]];
+    
+    //set default pack check
     if([settings objectForKey:DEFAULT_PACK_S] == nil){
         defaultPack = YES;
     }else{
@@ -85,6 +129,7 @@
     //UNCOMMENT WHEN PURCHASES ARE ACTIVE
     if(popPackPurchased){
         //set pop pack check
+        [settings setBool:true forKey:HAS_PURCH_S];
         if([settings objectForKey:POP_PACK_S] == nil){
             popPack = YES;
         }else{
@@ -93,7 +138,7 @@
     }else{
         popPack = NO;
     }
-    [self.PopSearchPackCheck initWithFrameAndCheck:CGRectMake(0, 0, 32, 32) checked:popPack];
+    [self.view addSubview:[self.PopSearchPackCheck initWithFrameAndCheck:CGRectMake(self.PopSearchPackCheck.frame.origin.x, self.PopSearchPackCheck.frame.origin.y, 32, 32) checked:popPack]];
     
     //get and set celeb pack
     if([settings objectForKey:CELEB_PACK_PURCHASED_S] == nil){
@@ -105,6 +150,7 @@
     //UNCOMMENT WHEN PURCHASES ARE ACTIVE
     if(celebPackPurchased){
         //set pop pack check
+        [settings setBool:true forKey:HAS_PURCH_S];
         if([settings objectForKey:CELEB_PACK_S] == nil){
             celebPack = YES;
         }else{
@@ -113,13 +159,13 @@
     }else{
         celebPack = NO;
     }
-    [self.CelebritySearchPackCheck initWithFrameAndCheck:CGRectMake(0, 0, 32, 32) checked:celebPack];
+    [self.view addSubview:[self.CelebritySearchPackCheck initWithFrameAndCheck:CGRectMake(self.CelebritySearchPackCheck.frame.origin.x, self.CelebritySearchPackCheck.frame.origin.y, 32, 32) checked:celebPack]];
     
     if([self AllPacksOff]){
         defaultPack = YES;
         [settings setBool:defaultPack forKey:DEFAULT_PACK_S];
     }
-    [self.DefaultSearchPackCheck initWithFrameAndCheck:CGRectMake(0, 0, 32, 32) checked:defaultPack];
+    [self.view addSubview:[self.DefaultSearchPackCheck initWithFrameAndCheck:CGRectMake(self.DefaultSearchPackCheck.frame.origin.x, self.DefaultSearchPackCheck.frame.origin.y, 32, 32) checked:defaultPack]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -159,15 +205,37 @@
         if(![self AllPacksOff])
         {
             [self.PopSearchPackCheck checkBoxClicked];
-            settings = [NSUserDefaults standardUserDefaults];
             [settings setBool:popPack forKey:POP_PACK_S];
+            
+            [settings setBool:true forKey:HAS_PURCH_S];
         }else{
             popPack = YES;
             
             [self ShowAllPackOffAlert];
         }
-    }else{
+    }else{//TODO!!!!should wait here if myproducts isn't initialized yet
         if ([SKPaymentQueue canMakePayments]) {
+            if(myProducts.count == 0){
+                if(howLongLoading == 0){
+                    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Connecting to the App Store" width:200];
+                }
+                howLongLoading++;
+                if(howLongLoading > 30){
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Slow Connection"
+                                                                    message:@"We couldn't connect to the App Store.  Please try again!"
+                                                                   delegate:self
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                    [DejalBezelActivityView removeViewAnimated:YES];
+                    howLongLoading = 0;
+                    return;
+                }
+                [self performSelector: @selector(PopSearchPackChanged:) withObject:sender afterDelay:.4];
+                return;
+            }
+            howLongLoading = 0;
+            [DejalBezelActivityView removeViewAnimated:YES];            
             // Display a store to the user.
             //have a popup "buy this search pack? 99c
             popPackPurchase = [PopPackPurchases alloc];
@@ -192,15 +260,37 @@
         if(![self AllPacksOff])
         {
             [self.CelebritySearchPackCheck checkBoxClicked];
-            settings = [NSUserDefaults standardUserDefaults];
             [settings setBool:celebPack forKey:CELEB_PACK_S];
+            
+            [settings setBool:true forKey:HAS_PURCH_S];
         }else{
             celebPack = YES;
             
             [self ShowAllPackOffAlert];
         }
-    }else{
+    }else{//TODO!!!!should wait here if myproducts isn't initialized yet
         if ([SKPaymentQueue canMakePayments]) {
+            if(myProducts.count == 0){
+                if(howLongLoading == 0){
+                    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Connecting to the App Store" width:200];
+                }
+                howLongLoading++;
+                if(howLongLoading > 30){
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Slow Connection"
+                                                                    message:@"We couldn't connect to the App Store.  Please try again!"
+                                                                   delegate:self
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                    [DejalBezelActivityView removeViewAnimated:YES];
+                    howLongLoading = 0;
+                    return;
+                }
+                [self performSelector: @selector(CelebritySearchPackChanged:) withObject:sender afterDelay:.4];
+                return;
+            }
+            howLongLoading = 0;
+            [DejalBezelActivityView removeViewAnimated:YES];
             // Display a store to the user.
             //have a popup "buy this search pack? 99c
             celebPackPurchase = [CelebPackPurchases alloc];
@@ -210,6 +300,29 @@
         }
     }
 
+}
+
+- (IBAction)ResetButtonPush:(id)sender {
+    resetAnswers = [[ResetAnswers alloc] init];
+    [resetAnswers ShowAlert:self];
+}
+
+-(void)ResetTextValues{
+    //set incorrect answers
+    if([settings objectForKey:INCORRECT_ANS_S] == nil){
+        incorrectAns = [NSNumber numberWithInt:0];
+    }else{
+        incorrectAns = [settings objectForKey:INCORRECT_ANS_S];
+    }
+    [self.IncorrectAnsLabel setText: [incorrectAns stringValue]];
+    
+    //set correct answers
+    if([settings objectForKey:CORRECT_ANS_S] == nil){
+        correctAns = [NSNumber numberWithInt:0];
+    }else{
+        correctAns = [settings objectForKey:CORRECT_ANS_S];
+    }
+    [self.CorrectAnsLabel setText: [correctAns stringValue]];
 }
 
 - (IBAction)DefaultSearchPackChanged:(id)sender {
@@ -267,4 +380,13 @@
     [alert show];
 }
 
+
+
+- (void)viewDidUnload {
+    [self setIncorrectStaticText:nil];
+    [self setCorrectStaticText:nil];
+    [self setMainMenuSearchPartyText:nil];
+    [self setGamePickerSearchPartyText:nil];
+    [super viewDidUnload];
+}
 @end

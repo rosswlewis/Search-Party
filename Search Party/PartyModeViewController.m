@@ -29,16 +29,15 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    self.view.backgroundColor = [UIColor clearColor];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Background.png"]];
+    self.view.backgroundColor = [UIColor whiteColor];
+    UIImage * settingsImage = [UIImage imageNamed:@"SearchParty_Background_Red_640x1136.png"];
     
-    //UIImageView *teamColorImageView;
-    UIImage * settingsImage = [UIImage imageNamed:@"Search-Party_Red.png"];
     teamColorImageView=[[UIImageView alloc]initWithImage:settingsImage];// take image size according to view
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
     teamColorImageView.frame = CGRectMake(0,0,screenWidth,screenHeight);
+    teamColorImageView.alpha = .25;
     [self.view insertSubview:teamColorImageView atIndex:0];
     
     // get all of the queries from the sqlite3 file and use one of them
@@ -52,15 +51,61 @@
     [successArray addObject:SOLO_CORRECT2];
     [successArray addObject:SOLO_CORRECT3];
     [successArray addObject:SOLO_CORRECT4];
+    [successArray addObject:SOLO_CORRECT5];
+    [successArray addObject:SOLO_CORRECT6];
+    [successArray addObject:SOLO_CORRECT7];
+    [successArray addObject:SOLO_CORRECT8];
+    [successArray addObject:SOLO_CORRECT9];
+    [successArray addObject:SOLO_CORRECT10];
+    [successArray addObject:SOLO_CORRECT11];
+    [successArray addObject:SOLO_CORRECT12];
+    [successArray addObject:SOLO_CORRECT13];
+    [successArray addObject:SOLO_CORRECT14];
+    [successArray addObject:SOLO_CORRECT15];
+    [successArray addObject:SOLO_CORRECT16];
+    [successArray addObject:SOLO_CORRECT17];
+    [successArray addObject:SOLO_CORRECT18];
+    [successArray addObject:SOLO_CORRECT19];
+    [successArray addObject:SOLO_CORRECT20];
+    [successArray addObject:SOLO_CORRECT21];
+    [successArray addObject:SOLO_CORRECT22];
+    [successArray addObject:SOLO_CORRECT23];
+    [successArray addObject:SOLO_CORRECT24];
+    [successArray addObject:SOLO_CORRECT25];
+    [successArray addObject:SOLO_CORRECT26];
+    [successArray addObject:SOLO_CORRECT27];
+    [successArray addObject:SOLO_CORRECT28];
+    [successArray addObject:SOLO_CORRECT29];
+    [successArray addObject:SOLO_CORRECT30];
+    [successArray addObject:SOLO_CORRECT31];
     [failureArray addObject:SOLO_WRONG1];
     [failureArray addObject:SOLO_WRONG2];
+    [failureArray addObject:SOLO_WRONG3];
+    [failureArray addObject:SOLO_WRONG4];
+    [failureArray addObject:SOLO_WRONG5];
+    [failureArray addObject:SOLO_WRONG6];
+    [failureArray addObject:SOLO_WRONG7];
+    [failureArray addObject:SOLO_WRONG8];
+    [failureArray addObject:SOLO_WRONG9];
+    [failureArray addObject:SOLO_WRONG10];
+    [failureArray addObject:SOLO_WRONG11];
+    [failureArray addObject:SOLO_WRONG12];
+    [failureArray addObject:SOLO_WRONG13];
+    [failureArray addObject:SOLO_WRONG14];
+    [failureArray addObject:SOLO_WRONG15];
+    [failureArray addObject:SOLO_WRONG16];
+    [failureArray addObject:SOLO_WRONG17];
     
     [[self.buttonOne layer] setBorderWidth:1.0f];
-    [[self.buttonOne layer] setBorderColor:[UIColor blackColor].CGColor];
+    [[self.buttonOne layer] setBorderColor:[UIColor blueColor].CGColor];
     [[self.buttonTwo layer] setBorderWidth:1.0f];
-    [[self.buttonTwo layer] setBorderColor:[UIColor blackColor].CGColor];
+    [[self.buttonTwo layer] setBorderColor:[UIColor blueColor].CGColor];
     [[self.buttonThree layer] setBorderWidth:1.0f];
-    [[self.buttonThree layer] setBorderColor:[UIColor blackColor].CGColor];
+    [[self.buttonThree layer] setBorderColor:[UIColor blueColor].CGColor];
+    [[self.theSearchLabel layer] setBorderWidth:1.0f];
+    [[self.theSearchLabel layer] setBorderColor:[UIColor blueColor].CGColor];
+    [[self.topSearchView layer] setBorderWidth:1.0f];
+    [[self.topSearchView layer] setBorderColor:[UIColor blackColor].CGColor];
     
     CGSize screenSize = [[UIScreen mainScreen] bounds].size;
     
@@ -94,16 +139,36 @@
 {
     if(redTeam){
         [self.theResultLabel setText:RED_TEAM];
-        UIImage * backImage = [UIImage imageNamed:@"Search-Party_Red.png"];
+        UIImage * backImage;
+        CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+            if (screenSize.height > 480.0f) {
+                /*Do iPhone 5 stuff here.*/
+                backImage = [UIImage imageNamed:@"SearchParty_Background_Red_640x1136.png"];
+            } else {
+                /*Do iPhone Classic stuff here.*/
+                backImage = [UIImage imageNamed:@"SearchParty_Background_Red_640x960.png"];
+            }
+        } else {
+            /*Do iPad stuff here.*/
+        }
         [teamColorImageView setImage:backImage];
-        //self.view.backgroundColor = [UIColor clearColor];
-        //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"RedGradient.png"]];
     }else{
         [self.theResultLabel setText:BLUE_TEAM];
-        UIImage * backImage = [UIImage imageNamed:@"Search-Party_blue.png"];
+        UIImage * backImage;
+        CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+            if (screenSize.height > 480.0f) {
+                /*Do iPhone 5 stuff here.*/
+                backImage = [UIImage imageNamed:@"SearchParty_Background_Blue_640x1136.png"];
+            } else {
+                /*Do iPhone Classic stuff here.*/
+                backImage = [UIImage imageNamed:@"SearchParty_Background_Blue_640x960.png"];
+            }
+        } else {
+            /*Do iPad stuff here.*/
+        }
         [teamColorImageView setImage:backImage];
-        //self.view.backgroundColor = [UIColor clearColor];
-        //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BlueGradient.png"]];
     }
     if(!([queryArray count] < 1)){
         [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading Suggestions" width:150];
@@ -119,7 +184,6 @@
 
 -(void) SetupNewSearch
 {
-    //testConnection = [Reachability reachabilityWithHostname:@"www.google.com"];
     testConnection = [Reachability reachabilityForInternetConnection];
     [testConnection startNotifier];
     
@@ -239,6 +303,7 @@
         [self.buttonOne addTarget:self action:@selector(buttonFailClick:) forControlEvents:UIControlEventTouchUpInside ];
     }
     [arrayOfSuggestions removeObjectAtIndex:random];
+    [self.buttonOne.titleLabel setTextAlignment:UITextAlignmentCenter];    
     
     //button two
     random = arc4random() % 2;
@@ -251,6 +316,7 @@
         [self.buttonTwo addTarget:self action:@selector(buttonFailClick:) forControlEvents:UIControlEventTouchUpInside ];
     }
     [arrayOfSuggestions removeObjectAtIndex:random];
+    [self.buttonTwo.titleLabel setTextAlignment:UITextAlignmentCenter];    
     
     //button three
     buttonText = [arrayOfSuggestions objectAtIndex:0];
@@ -261,6 +327,7 @@
     }else{
         [self.buttonThree addTarget:self action:@selector(buttonFailClick:) forControlEvents:UIControlEventTouchUpInside ];
     }
+    [self.buttonThree.titleLabel setTextAlignment:UITextAlignmentCenter];
 }
 
 -(void)ClearButtonsColors
@@ -282,4 +349,8 @@
     [self.buttonThree removeTarget:self action:@selector(buttonFailClick:) forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void)viewDidUnload {
+    [self setTopSearchView:nil];
+    [super viewDidUnload];
+}
 @end

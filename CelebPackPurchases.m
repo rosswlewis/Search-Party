@@ -40,7 +40,6 @@
         return;
     }
     else if (buttonIndex == 1) {
-        //CHANGE THIS!!
         //use products
         SKProduct *selectedProduct = nil;
         for(SKProduct * prod in products)

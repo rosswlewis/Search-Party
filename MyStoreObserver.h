@@ -9,11 +9,18 @@
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
 
+@class ViewController;
+
 @interface MyStoreObserver : NSObject{
     NSUserDefaults * settings;
     NSArray * products;
+    
+    //ViewController * viewController;
 }
-- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions;
--(void)setProducts:(NSArray *) myProducts;
+
+//@property (nonatomic, assign) id <storeObserverDelegate> delegate;
+
+-(void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions;
+-(void)setProducts:(NSArray *) myProducts CorrectViewController:(ViewController *) correctViewController;
 
 @end

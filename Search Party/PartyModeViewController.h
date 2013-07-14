@@ -35,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *buttonThree;
 @property (weak, nonatomic) IBOutlet UIProgressView *redTeamProgress;
 @property (weak, nonatomic) IBOutlet UIProgressView *blueTeamProgress;
+@property (weak, nonatomic) IBOutlet UIView *topSearchView;
 
 
 - (IBAction)buttonSuccessClick:(id)sender;

@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SoundEffects.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+{
+    SoundEffects * soundEffects;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 

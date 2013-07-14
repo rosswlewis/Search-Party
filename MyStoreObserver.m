@@ -7,11 +7,21 @@
 //
 
 #import "MyStoreObserver.h"
+#import "ViewController.h"
 
 @implementation MyStoreObserver
 
--(void)setProducts:(NSArray *)myProducts{
+static bool popCultureAlready;
+static bool celebAlready;
+static ViewController * viewController;
+//@synthesize delegate;
+
+-(void)setProducts:(NSArray *)myProducts CorrectViewController:(ViewController *) correctViewController{
     products = myProducts;
+    popCultureAlready = false;
+    celebAlready = false;
+    
+    viewController = correctViewController;
 }
 
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
@@ -37,14 +47,37 @@
 
 - (void) completeTransaction: (SKPaymentTransaction *)transaction
 {
-    if([transaction.originalTransaction.payment.productIdentifier isEqual: POP_PACK_IDENTIFIER]){
-        [self updateUserDefaultsAfterPurchase:POP_PACK_PURCHASED_S];
-        //CALL BUTTON CLICK IN VIEW CONTROLLER
-        [self showPopupForPurchaseSuccess];
-    }else if([transaction.originalTransaction.payment.productIdentifier isEqual: CELEB_PACK_IDENTIFIER]){
-        [self updateUserDefaultsAfterPurchase:CELEB_PACK_PURCHASED_S];
-        //CALL BUTTON CLICK IN VIEW CONTROLLER
-        [self showPopupForPurchaseSuccess];
+    if([transaction.payment.productIdentifier isEqual: POP_PACK_IDENTIFIER]){
+        if(!popCultureAlready){
+            settings = [NSUserDefaults standardUserDefaults];
+            
+            [settings setBool:true forKey:HAS_PURCH_S];
+            
+            popCultureAlready = true;
+            [self updateUserDefaultsAfterPurchase:POP_PACK_PURCHASED_S];
+            //CALL BUTTON CLICK IN VIEW CONTROLLER
+            
+            //[[self delegate] popPurchaseSuccess];
+            //[viewController popPurchaseSuccess];
+            [viewController.PopSearchPackCheck sendActionsForControlEvents:UIControlEventTouchUpInside];
+            
+            [self showPopupForPurchaseSuccess];
+        }
+    }else if([transaction.payment.productIdentifier isEqual: CELEB_PACK_IDENTIFIER]){
+        if(!celebAlready){
+            settings = [NSUserDefaults standardUserDefaults];
+            
+            [settings setBool:true forKey:HAS_PURCH_S];
+            
+            celebAlready = true;
+            [self updateUserDefaultsAfterPurchase:CELEB_PACK_PURCHASED_S];
+
+            //[viewController celebPurchaseSuccess];
+            //[[self delegate] celebPurchaseSuccess];
+            [viewController.CelebritySearchPackCheck sendActionsForControlEvents:UIControlEventTouchUpInside];
+            
+            [self showPopupForPurchaseSuccess];
+        }
     }
     
     // Remove the transaction from the payment queue.
@@ -69,13 +102,35 @@
 {
     //use the transaction to call the right function (transaction should have the product identifier)
     if([transaction.originalTransaction.payment.productIdentifier isEqual: POP_PACK_IDENTIFIER]){
-        [self updateUserDefaultsAfterPurchase:POP_PACK_PURCHASED_S];
-        //CALL BUTTON CLICK IN VIEW CONTROLLER
-        [self showPopupForPurchaseSuccess];
+        if(!popCultureAlready){
+            settings = [NSUserDefaults standardUserDefaults];
+            
+            [settings setBool:true forKey:HAS_PURCH_S];
+            
+            popCultureAlready = true;
+            [self updateUserDefaultsAfterPurchase:POP_PACK_PURCHASED_S];
+            
+            //[viewController popPurchaseSuccess];
+            //[[self delegate] popPurchaseSuccess];
+            [viewController.PopSearchPackCheck sendActionsForControlEvents:UIControlEventTouchUpInside];
+            
+            [self showPopupForPurchaseSuccess];
+        }
     }else if([transaction.originalTransaction.payment.productIdentifier isEqual: CELEB_PACK_IDENTIFIER]){
-        [self updateUserDefaultsAfterPurchase:CELEB_PACK_PURCHASED_S];
-        //CALL BUTTON CLICK IN VIEW CONTROLLER
-        [self showPopupForPurchaseSuccess];
+        if(!celebAlready){
+            settings = [NSUserDefaults standardUserDefaults];
+            
+            [settings setBool:true forKey:HAS_PURCH_S];
+            
+            celebAlready = true;
+            [self updateUserDefaultsAfterPurchase:CELEB_PACK_PURCHASED_S];
+            
+            //[viewController celebPurchaseSuccess];
+            //[[self delegate] celebPurchaseSuccess];
+            [viewController.CelebritySearchPackCheck sendActionsForControlEvents:UIControlEventTouchUpInside];
+            
+            [self showPopupForPurchaseSuccess];
+        }
     }
     
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];

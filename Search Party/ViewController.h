@@ -12,6 +12,8 @@
 #import "MyStoreObserver.h"
 #import "PopPackPurchases.h"
 #import "CelebPackPurchases.h"
+#import "ResetAnswers.h"
+#import "DejalActivityView.h"
 
 @interface ViewController : UIViewController
 {
@@ -19,6 +21,9 @@
     BOOL sound;
     BOOL soundEffectsOn;
     BOOL defaultPack;
+    NSNumber * incorrectAns;
+    NSNumber * correctAns;
+    int howLongLoading;
     
     BOOL popPack;
     BOOL popPackPurchased;
@@ -29,11 +34,20 @@
     CelebPackPurchases * celebPackPurchase;
     
     SoundEffects * soundEffects;
-    NSArray *myProducts;
+    NSArray * myProducts;
     MyStoreObserver * observer;
     
+    ResetAnswers * resetAnswers;
+    
+    UIImageView * backgroundImage;
 }
 
+@property (weak, nonatomic) IBOutlet UILabel *MainMenuSearchPartyText;
+@property (weak, nonatomic) IBOutlet UILabel *GamePickerSearchPartyText;
+@property (weak, nonatomic) IBOutlet UILabel *CorrectStaticText;
+@property (weak, nonatomic) IBOutlet UILabel *IncorrectStaticText;
+@property (weak, nonatomic) IBOutlet UILabel *IncorrectAnsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *CorrectAnsLabel;
 @property (weak, nonatomic) IBOutlet SearchCheckBox *DefaultSearchPackCheck;
 @property (weak, nonatomic) IBOutlet SearchCheckBox *PopSearchPackCheck;
 @property (weak, nonatomic) IBOutlet SearchCheckBox *CelebritySearchPackCheck;
@@ -41,9 +55,14 @@
 @property (weak, nonatomic) IBOutlet UISwitch *SoundEffectsSwitch;
 @property (weak, nonatomic) IBOutlet UIScrollView *SettingsScroller;
 
+//-(void)popPurchaseSuccess;
+//-(void)celebPurchaseSuccess;
+-(void)ResetTextValues;
+
 - (IBAction)DefaultSearchPackChanged:(id)sender;
 - (IBAction)PopSearchPackChanged:(id)sender;
 - (IBAction)CelebritySearchPackChanged:(id)sender;
+- (IBAction)ResetButtonPush:(id)sender;
 
 - (IBAction)SoundChanged:(id)sender;
 - (IBAction)SoundEffectsChanged:(id)sender;

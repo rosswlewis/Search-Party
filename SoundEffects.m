@@ -16,7 +16,7 @@
         NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
         backgroundAudio = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
         backgroundAudio.numberOfLoops = -1;//infinite
-        backgroundAudio.volume = .25;
+        backgroundAudio.volume = .2;
         
         [backgroundAudio play];
         songIsPlaying = YES;

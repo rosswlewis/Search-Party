@@ -17,15 +17,19 @@
         
         //self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         if(check){
-            //@"Very-Basic-Checked-checkbox-icon.png"
             [self setImage:[UIImage imageNamed:
                             @"On_check.png"]
                   forState:UIControlStateNormal];
+//            [self setBackgroundImage:[UIImage imageNamed:
+//                                      @"On_check.png"]
+//                            forState:UIControlStateNormal];
         }else{
-            //@"Very-Basic-Unchecked-checkbox-icon.png"
             [self setImage:[UIImage imageNamed:
                             @"off_check.png"]
                   forState:UIControlStateNormal];
+//            [self setBackgroundImage:[UIImage imageNamed:
+//                                      @"off_check.png"]
+//                            forState:UIControlStateNormal];
         }
         self.isChecked = check;
         //[self addTarget:self action:@selector(checkBoxClicked)forControlEvents:UIControlEventTouchUpInside];
@@ -39,12 +43,17 @@
         [self setImage:[UIImage imageNamed:
                         @"On_check.png"]
               forState:UIControlStateNormal];
-        
+//        [self setBackgroundImage:[UIImage imageNamed:
+//                                  @"On_check.png"]
+//                        forState:UIControlStateNormal];
     }else{
         self.isChecked =NO;
         [self setImage:[UIImage imageNamed:
                         @"off_check.png"]
               forState:UIControlStateNormal];
+//        [self setBackgroundImage:[UIImage imageNamed:
+//                                  @"off_check.png"]
+//                        forState:UIControlStateNormal];
         
     }
 }

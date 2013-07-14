@@ -12,6 +12,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    soundEffects = [[SoundEffects alloc] init];
+    [soundEffects PlaySoundGameButtonSuccess];
     // Override point for customization after application launch.
     return YES;
 }
