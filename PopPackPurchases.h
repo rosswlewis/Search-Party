@@ -11,6 +11,8 @@
 
 @interface PopPackPurchases : UIAlertView{
     NSArray * products;
+    NSUserDefaults * settings;
+    BOOL hasRestored;
 }
 
 -(void)ShowAlert: (NSArray*)myProducts;

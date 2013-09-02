@@ -31,8 +31,22 @@
 -(void)ShowAlert: (NSArray*)myProducts
 {
     products = myProducts;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Purchase a pack?" message:@"Would you like to purchase the Celebrity search pack?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
-    [alert show];
+    
+//    if([settings objectForKey:HAS_RESTORED_S] == nil){
+//        hasRestored = NO;
+//    }else{
+//        hasRestored = [settings boolForKey:HAS_RESTORED_S];
+//    }
+    
+//    if(hasRestored){
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Purchase a pack?" message:@"Would you like to purchase the Celebrity search pack?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
+//        [alert show];
+//    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Purchase a pack?" message:@"Would you like to purchase the Celebrity search pack?  If you have already have made this purchase, you can also restore!" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",@"Restore",nil];
+        [alert show];
+//    }
+
+    
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
@@ -60,6 +74,8 @@
                                                   otherButtonTitles:nil];
             [alert show];
         }
+    }else if (buttonIndex == 2) {
+        [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
     }
 }
 

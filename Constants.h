@@ -99,6 +99,9 @@
 #define POP_PACK_PURCHASED_S @"popPackPurchasedSave"
 #define CELEB_PACK_S         @"celebPackSave"
 #define CELEB_PACK_PURCHASED_S @"celebPackPurchasedSave"
+#define TOTAL_POP_ANS        @"totalPopSave"
+#define TOTAL_CELEB_ANS      @"totalCelebSave"
+#define HAS_RESTORED_S       @"hasRestoredSave"
 
 #define POP_PACK_IDENTIFIER  @"PopCultureSearchPack"
 #define CELEB_PACK_IDENTIFIER @"CelebritySearchPack"
@@ -120,5 +123,17 @@
 #define PAYMENTS_OFF_MESG    @"Purchases are disabled for this device."
 
 #define CREDIT_IMG           @"credits_Search-Party-1.png"
+
+#define HIGHEST_STREATK_ID   @"SearchPartyPocket.HighestStreak"
+
+#define APPRENTICE_GUESSER   @"SearchPartyPocket.ApprenticeGuesser"
+#define SKILLED_SEARCHER     @"SearchPartyPocket.SkilledSearcher"
+#define INTERNET_AFICIONADO  @"SearchPartyPocket.InternetAficionado"
+#define THE_IMPOSSIBLE       @"SearchPartyPocket.TheImpossible"
+#define THE_CELEBRITY        @"SearchPartyPocket.TheCelebrity"
+#define POP_CULTURE_GURU     @"SearchPartyPocket.ThePopCultureGuru"
+#define MR_CONSISTENT        @"SearchPartyPocket.MrConsistent"
+
+#define BACKGROUNDALPHA      .5
 
 #endif

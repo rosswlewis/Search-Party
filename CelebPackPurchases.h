@@ -11,6 +11,8 @@
 
 @interface CelebPackPurchases : UIAlertView{
     NSArray * products;
+    NSUserDefaults * settings;
+    BOOL hasRestored;
 }
 
 -(void)ShowAlert: (NSArray*)myProducts;

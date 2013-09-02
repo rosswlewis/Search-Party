@@ -10,8 +10,12 @@
 #import "GoogleSuggestions.h"
 #import "Reachability.h"
 #import "DejalActivityView.h"
+#import <Social/Social.h>
+#import <FacebookSDK/FacebookSDK.h>
+#import "OpenSearchInGoogle.h"
+#import "GAITrackedViewController.h"
 
-@interface PartyModeViewController : UIViewController <UIAlertViewDelegate> 
+@interface PartyModeViewController : GAITrackedViewController <UIAlertViewDelegate>
 {
     UIButton * correctButton;
     SoundEffects * soundEffects;
@@ -24,9 +28,13 @@
     float redTeamCorrectAnswers;
     Reachability * testConnection;
     UIImageView * teamColorImageView;
+    
+    OpenSearchInGoogle * searchGoogle;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *partyModeText;
+@property (weak, nonatomic) IBOutlet UILabel *BlueTeamScoreTExt;
+@property (weak, nonatomic) IBOutlet UILabel *RedTeamScoreText;
 @property (weak, nonatomic) IBOutlet UIImageView *partyModePicture;
 @property (weak, nonatomic) IBOutlet UILabel *theSearchLabel;
 @property (weak, nonatomic) IBOutlet UILabel *theResultLabel;
@@ -40,5 +48,7 @@
 
 - (IBAction)buttonSuccessClick:(id)sender;
 - (IBAction)buttonFailClick:(id)sender;
+- (IBAction)TwitterClick:(id)sender;
+- (IBAction)FacebookClick:(id)sender;
 
 @end

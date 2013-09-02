@@ -22,6 +22,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.trackedViewName = @"Menu/About/HowTo";
 	// Do any additional setup after loading the view, typically from a nib.
     
     //load
@@ -32,9 +33,13 @@
         if (screenSize.height > 480.0f) {
             /*Do iPhone 5 stuff here.*/
             backImg = [UIImage imageNamed:@"SearchParty_Background_Yellow_640x1136.png"];
+            [self.LeaderboardIphoneOld removeFromSuperview];
+            [self.AcheivmentsIphoneOld removeFromSuperview];
         } else {
             /*Do iPhone Classic stuff here.*/
             backImg = [UIImage imageNamed:@"SearchParty_Background_Yellow_640x960.png"];
+            [self.LeaderboardIphoneNew removeFromSuperview];
+            [self.AcheivementsIphoneNew removeFromSuperview];
         }
     } else {
         /*Do iPad stuff here.*/
@@ -44,7 +49,7 @@
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
     backgroundImage.frame = CGRectMake(0,0,screenWidth,screenHeight);
-    backgroundImage.alpha = .3;
+    backgroundImage.alpha = BACKGROUNDALPHA;
     [self.view insertSubview:backgroundImage atIndex:0];
     
     soundEffects = [[SoundEffects alloc] init];
@@ -199,6 +204,12 @@
         popPackPurchased = [settings boolForKey:POP_PACK_PURCHASED_S];
     }
     
+//    if([settings objectForKey:HAS_RESTORED_S] == nil){
+//        hasRestored = NO;
+//    }else{
+//        hasRestored = [settings boolForKey:HAS_RESTORED_S];
+//    }
+    
     if(popPackPurchased){
     //if(YES){
         popPack = ![self.PopSearchPackCheck isChecked];
@@ -235,11 +246,16 @@
                 return;
             }
             howLongLoading = 0;
-            [DejalBezelActivityView removeViewAnimated:YES];            
-            // Display a store to the user.
-            //have a popup "buy this search pack? 99c
-            popPackPurchase = [PopPackPurchases alloc];
-            [popPackPurchase ShowAlert: myProducts];
+            [DejalBezelActivityView removeViewAnimated:YES];
+            //maybe try to restore then show the alert...
+            //if(!hasRestored){
+            //    [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+            //}else{
+                // Display a store to the user.
+                //have a popup "buy this search pack? 99c
+                popPackPurchase = [PopPackPurchases alloc];
+                [popPackPurchase ShowAlert: myProducts];
+            //}
         } else {
             [self ShowPaymentsTurnedOffAlert];
         }
@@ -253,6 +269,12 @@
     }else{
         celebPackPurchased = [settings boolForKey:CELEB_PACK_PURCHASED_S];
     }
+    
+//    if([settings objectForKey:HAS_RESTORED_S] == nil){
+//        hasRestored = NO;
+//    }else{
+//        hasRestored = [settings boolForKey:HAS_RESTORED_S];
+//    }
     
     if(celebPackPurchased){
         //if(YES){
@@ -291,10 +313,15 @@
             }
             howLongLoading = 0;
             [DejalBezelActivityView removeViewAnimated:YES];
-            // Display a store to the user.
-            //have a popup "buy this search pack? 99c
-            celebPackPurchase = [CelebPackPurchases alloc];
-            [celebPackPurchase ShowAlert: myProducts];
+            //maybe try to restore then show the alert...
+            //if(!hasRestored){
+            //    [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+            //}else{
+                // Display a store to the user.
+                //have a popup "buy this search pack? 99c
+                celebPackPurchase = [CelebPackPurchases alloc];
+                [celebPackPurchase ShowAlert: myProducts];
+            //}
         } else {
             [self ShowPaymentsTurnedOffAlert];
         }
@@ -380,13 +407,42 @@
     [alert show];
 }
 
-
-
 - (void)viewDidUnload {
     [self setIncorrectStaticText:nil];
     [self setCorrectStaticText:nil];
     [self setMainMenuSearchPartyText:nil];
     [self setGamePickerSearchPartyText:nil];
+    [self setLeaderboardIphoneOld:nil];
+    [self setAcheivmentsIphoneOld:nil];
+    [self setLeaderboardIphoneNew:nil];
+    [self setAcheivementsIphoneNew:nil];
     [super viewDidUnload];
+}
+
+- (IBAction)LeaderboardButtonPush:(id)sender {
+    GKLeaderboardViewController *leaderboardController = [[GKLeaderboardViewController alloc] init];
+    if (leaderboardController != NULL)
+    {
+        leaderboardController.category = HIGHEST_STREATK_ID;//self.currentLeaderBoard;
+        leaderboardController.timeScope = GKLeaderboardTimeScopeAllTime;
+        leaderboardController.leaderboardDelegate = self;
+        [self presentModalViewController: leaderboardController animated: YES];
+    }
+}
+- (void)leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController
+{
+    [self dismissModalViewControllerAnimated: YES];
+}
+- (IBAction)AcheivmentsButtonPush:(id)sender {
+    GKAchievementViewController *achievements = [[GKAchievementViewController alloc] init];
+    if (achievements != NULL)
+    {
+        achievements.achievementDelegate = self;
+        [self presentModalViewController: achievements animated: YES];
+    }
+}
+- (void)achievementViewControllerDidFinish:(GKAchievementViewController *)viewController;
+{
+    [self dismissModalViewControllerAnimated: YES];
 }
 @end

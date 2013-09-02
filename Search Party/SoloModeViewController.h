@@ -17,8 +17,11 @@
 #import "Unirest.h"
 #import <Social/Social.h>
 #import <Accounts/Accounts.h>
+#import "GameCenterHelper.h"
+#import "OpenSearchInGoogle.h"
+#import "GAITrackedViewController.h"
 
-@interface SoloModeViewController : UIViewController <UIAlertViewDelegate> 
+@interface SoloModeViewController : GAITrackedViewController <UIAlertViewDelegate>
 {
     NSUserDefaults * streak;
     UIButton * correctButton;
@@ -30,6 +33,7 @@
     NSNumber * currentStreak;
     NSNumber * bestStreak;
     BOOL goNext;
+    BOOL justUpdatedStreak;
     //int queryQueued;
     Reachability * testConnection;
     
@@ -37,9 +41,15 @@
     NSNumber * correctAns;
     
     SuggestRate * suggestRate;
+    OpenSearchInGoogle * searchGoogle;
     
     ACAccountStore * accountStore;
     UIImageView * changingBackground;
+    
+    GameCenterHelper * gameCenterHelper;
+    
+    NSTimer * countdownTimer;
+    int countDown;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *StaticPercentCorrect;

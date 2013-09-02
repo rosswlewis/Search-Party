@@ -35,7 +35,7 @@ static ViewController * curViewController;
 -(void)ShowAlert:(ViewController *) currentViewController
 {
     curViewController = currentViewController;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Reset Answers?" message:@"Are you sure you want to reset your answers?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Reset Answers?" message:@"Are you sure you want to reset your answers?  (This won't reset your score on the leaderboard)" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
     [alert show];
 }
 

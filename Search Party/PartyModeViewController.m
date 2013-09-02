@@ -27,6 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.trackedViewName = @"PartyMode";
 	// Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -37,7 +38,7 @@
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
     teamColorImageView.frame = CGRectMake(0,0,screenWidth,screenHeight);
-    teamColorImageView.alpha = .25;
+    teamColorImageView.alpha = BACKGROUNDALPHA;
     [self.view insertSubview:teamColorImageView atIndex:0];
     
     // get all of the queries from the sqlite3 file and use one of them
@@ -131,12 +132,15 @@
     blueTeamCorrectAnswers = 0;
     redTeamCorrectAnswers = 0;
     [self.theResultLabel setText:RED_TEAM];
+    [self.BlueTeamScoreTExt setText:@"0/5"];
+    [self.RedTeamScoreText setText:@"0/5"];
     
     [self StartANewSearch];
 }
 
 -(void)StartANewSearch
 {
+    [self ClearButtonsEvents];
     if(redTeam){
         [self.theResultLabel setText:RED_TEAM];
         UIImage * backImage;
@@ -233,6 +237,7 @@
         }
         [self.theResultLabel setText:[NSString stringWithFormat:@"%@  %@",[successArray objectAtIndex:arc4random() % [successArray count]], BLUE_TEAM_UP]];
         [self.redTeamProgress setProgress:redTeamCorrectAnswers animated:YES];
+        [self.RedTeamScoreText setText:[NSString stringWithFormat:@"%.f%@",(redTeamCorrectAnswers * 5),@"/5"]];
     }else{
         blueTeamCorrectAnswers += .2;
         if(blueTeamCorrectAnswers > .9){
@@ -247,11 +252,13 @@
         }
         [self.theResultLabel setText:[NSString stringWithFormat:@"%@  %@",[successArray objectAtIndex:arc4random() % [successArray count]], RED_TEAM_UP]];
         [self.blueTeamProgress setProgress:blueTeamCorrectAnswers animated:YES];
+        [self.BlueTeamScoreTExt setText:[NSString stringWithFormat:@"%.f%@",(blueTeamCorrectAnswers * 5),@"/5"]];
     }
     
     [self ClearButtonsEvents];
     redTeam = !redTeam;
     
+    [self CreateGoogleButtons];
     [self performSelector:@selector(StartANewSearch) withObject:nil afterDelay:TIME_BETWEEN];
 }
 
@@ -268,6 +275,7 @@
     redTeam = !redTeam;
     [self ClearButtonsEvents];
     
+    [self CreateGoogleButtons];
     [self performSelector:@selector(StartANewSearch) withObject:nil afterDelay:TIME_BETWEEN];
 }
 
@@ -330,6 +338,235 @@
     [self.buttonThree.titleLabel setTextAlignment:UITextAlignmentCenter];
 }
 
+-(void)CreateGoogleButtons{
+    [self.buttonOne addTarget:self action:@selector(buttonGoogleSearch:) forControlEvents:UIControlEventTouchUpInside];
+    [self.buttonTwo addTarget:self action:@selector(buttonGoogleSearch:) forControlEvents:UIControlEventTouchUpInside];
+    [self.buttonThree addTarget:self action:@selector(buttonGoogleSearch:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)buttonGoogleSearch:(id)sender {
+    UIButton * searchButton = (UIButton *)sender;
+    
+    searchGoogle = [[OpenSearchInGoogle alloc] init];
+    [searchGoogle ShowAlertWithQuery:searchButton.currentTitle];
+}
+
+- (IBAction)TwitterClick:(id)sender {
+    //take screenshot
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
+        UIGraphicsBeginImageContextWithOptions(self.view.window.bounds.size, NO, [UIScreen mainScreen].scale);
+    else
+        UIGraphicsBeginImageContext(self.view.window.bounds.size);
+    [self.view.window.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    // Save the screenshot to the device's photo album
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Opening Twitter :D" width:150];
+    UIImageWriteToSavedPhotosAlbum(newImage, self, @selector(twitImage:didFinishSavingWithError:contextInfo:), nil);
+}
+
+// callback for UIImageWriteToSavedPhotosAlbum
+- (void)twitImage:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    
+    //tweet photo @searchpartypocket
+    
+    //  Create an instance of the Tweet Sheet
+    SLComposeViewController *tweetSheet = [SLComposeViewController
+                                           composeViewControllerForServiceType:
+                                           SLServiceTypeTwitter];
+    
+    // Sets the completion handler.  Note that we don't know which thread the
+    // block will be called on, so we need to ensure that any UI updates occur
+    // on the main queue
+    tweetSheet.completionHandler = ^(SLComposeViewControllerResult result) {
+        switch(result) {
+                //  This means the user cancelled without sending the Tweet
+            case SLComposeViewControllerResultCancelled:
+                break;
+                //  This means the user hit 'Send'
+            case SLComposeViewControllerResultDone:
+            {
+                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Success!"
+                                                                 message:@"Your tweet has been sent!  Thanks for playing! ^_^"
+                                                                delegate:nil
+                                                       cancelButtonTitle:@"OK"
+                                                       otherButtonTitles:nil];
+                [alert show];
+                break;
+            }
+        }
+        
+        //  dismiss the Tweet Sheet
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self dismissViewControllerAnimated:NO completion:^{
+                NSLog(@"Tweet Sheet has been dismissed.");
+            }];
+        });
+    };
+    
+    //  Set the initial body of the Tweet
+    [tweetSheet setInitialText:@"@SearchPartyGame "];
+    
+    //  Adds an image to the Tweet.
+    if (!error & ![tweetSheet addImage:image]) {
+        NSLog(@"Unable to add the image!");
+    }
+    
+    //  Add an URL to the Tweet.  You can add multiple URLs.
+    if (![tweetSheet addURL:[NSURL URLWithString:@"http://itun.es/i6xd5zz"]]){
+        NSLog(@"Unable to add the URL!");
+    }
+    
+    //  Presents the Tweet Sheet to the user
+    [self presentViewController:tweetSheet animated:NO completion:^{
+        [DejalBezelActivityView removeViewAnimated:YES];
+        NSLog(@"Tweet sheet has been presented.");
+    }];
+}
+
+- (IBAction)FacebookClick:(id)sender {
+    
+    //take screenshot
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
+        UIGraphicsBeginImageContextWithOptions(self.view.window.bounds.size, NO, [UIScreen mainScreen].scale);
+    else
+        UIGraphicsBeginImageContext(self.view.window.bounds.size);
+    [self.view.window.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    // Save the screenshot to the device's photo album
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Opening Facebook :D" width:150];
+    UIImageWriteToSavedPhotosAlbum(newImage, self, @selector(fbImage:didFinishSavingWithError:contextInfo:), nil);
+    
+}
+
+// callback for UIImageWriteToSavedPhotosAlbum
+- (void)fbImage:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    if(!error){
+        //upload photo
+        //if no image error do this
+        //else if this doesn't work or image error do the fallback
+        BOOL displayedNativeDialog = [FBNativeDialogs
+                                      presentShareDialogModallyFrom:self
+                                      initialText:@""
+                                      image:image
+                                      url:[NSURL URLWithString:@"http://itun.es/i6xd5zz"]
+                                      handler:^(FBNativeDialogResult result, NSError *error) {
+                                          
+                                          NSString *alertText = @"";
+                                          if ([[error userInfo][FBErrorDialogReasonKey] isEqualToString:FBErrorDialogNotSupported]) {
+                                              //alertText = @"iOS Share Sheet not supported.";
+                                              //do other uploader
+                                              //[self BackupFacebookUploader];
+                                          } else if (error) {
+                                              //alertText = [NSString stringWithFormat:@"error: domain = %@, code = %d", error.domain, error.code];
+                                              //do other uploader
+                                              [self BackupFacebookUploader];
+                                          } else if (result == FBNativeDialogResultSucceeded) {
+                                              alertText = @"Thanks for posting!  Your upload was successfully!";
+                                          }
+                                          
+                                          if (![alertText isEqualToString:@""]) {
+                                              // Show the result in an alert
+                                              [[[UIAlertView alloc] initWithTitle:@"Facebook Upload"
+                                                                          message:alertText
+                                                                         delegate:self
+                                                                cancelButtonTitle:@"OK!"
+                                                                otherButtonTitles:nil]
+                                               show];
+                                          }
+                                      }];
+        if (!displayedNativeDialog) {
+            [self BackupFacebookUploader];
+        }else{
+            [DejalBezelActivityView removeViewAnimated:YES];
+        }
+    }else{
+        [self BackupFacebookUploader];
+    }
+}
+
+-(void)BackupFacebookUploader{
+    // This function will invoke the Feed Dialog to post to a user's Timeline and News Feed
+    // It will attemnt to use the Facebook Native Share dialog
+    // If that's not supported we'll fall back to the web based dialog.
+    
+    NSString *linkURL = [NSString stringWithFormat:@"https://itunes.apple.com/us/app/search-party-pocket/id648136813?mt=8"];
+    NSString *pictureURL = @"http://nebula.wsimg.com/7ab3451b62ab1586ae8de7f2807d6a4d?AccessKeyId=E3F677DE8B7E129279D4&disposition=0";
+    
+    // Prepare the native share dialog parameters
+    FBShareDialogParams *shareParams = [[FBShareDialogParams alloc] init];
+    shareParams.link = [NSURL URLWithString:linkURL];
+    shareParams.name = @"Try Search Party!";
+    shareParams.caption= @"Can you get something better?";
+    shareParams.picture= [NSURL URLWithString:pictureURL];
+    shareParams.description =
+    [NSString stringWithFormat:@"Which is search the most on the internet from the phrase \"%@\"?  (1) \"%@\".  (2) \"%@\".  (3) \"%@\".", self.theSearchLabel.text,self.buttonOne.titleLabel.text,self.buttonTwo
+     .titleLabel.text,self.buttonThree.titleLabel.text];
+    
+    if ([FBDialogs canPresentShareDialogWithParams:shareParams]){
+        
+        [FBDialogs presentShareDialogWithParams:shareParams
+                                    clientState:nil
+                                        handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+                                            if(error) {
+                                                NSLog(@"Error publishing story.");
+                                                [[[UIAlertView alloc] initWithTitle:@"Facebook Post"
+                                                                            message:@"There was an error with your post :( Please try again soon"
+                                                                           delegate:self
+                                                                  cancelButtonTitle:@"ok"
+                                                                  otherButtonTitles:nil] show];
+                                            } else if (results[@"completionGesture"] && [results[@"completionGesture"] isEqualToString:@"cancel"]) {
+                                                NSLog(@"User canceled story publishing.");
+                                            } else {
+                                                NSLog(@"Story published.");
+                                                [[[UIAlertView alloc] initWithTitle:@"Facebook Post"
+                                                                            message:@"Your post was successful!"
+                                                                           delegate:self
+                                                                  cancelButtonTitle:@"OK!"
+                                                                  otherButtonTitles:nil] show];
+                                            }
+                                        }];
+        
+    }else {
+        
+        // Prepare the web dialog parameters
+        NSDictionary *params = @{
+                                 @"name" : shareParams.name,
+                                 @"caption" : shareParams.caption,
+                                 @"description" : shareParams.description,
+                                 @"picture" : pictureURL,
+                                 @"link" : linkURL
+                                 };
+        
+        // Invoke the dialog
+        [FBWebDialogs presentFeedDialogModallyWithSession:nil
+                                               parameters:params
+                                                  handler:
+         ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+             if (error) {
+                 NSLog(@"Error publishing story.");
+                 [[[UIAlertView alloc] initWithTitle:@"Facebook Post"
+                                             message:@"There was an error with your post :( Please try again soon"
+                                            delegate:self
+                                   cancelButtonTitle:@"ok"
+                                   otherButtonTitles:nil] show];
+             } else {
+                 if (result == FBWebDialogResultDialogNotCompleted) {
+                     NSLog(@"User canceled story publishing.");
+                 } else {
+                     NSLog(@"Story published.");
+                     [[[UIAlertView alloc] initWithTitle:@"Facebook Post"
+                                                 message:@"Your post was successful!"
+                                                delegate:self
+                                       cancelButtonTitle:@"OK!"
+                                       otherButtonTitles:nil] show];
+                 }
+             }}];
+    }
+    [DejalBezelActivityView removeViewAnimated:YES];
+}
+
 -(void)ClearButtonsColors
 {
     [self.buttonOne setBackgroundColor:[UIColor whiteColor]];
@@ -351,6 +588,8 @@
 
 - (void)viewDidUnload {
     [self setTopSearchView:nil];
+    [self setBlueTeamScoreTExt:nil];
+    [self setRedTeamScoreText:nil];
     [super viewDidUnload];
 }
 @end

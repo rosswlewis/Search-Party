@@ -13,6 +13,7 @@
 
 static bool popCultureAlready;
 static bool celebAlready;
+static bool failAlready;
 static ViewController * viewController;
 //@synthesize delegate;
 
@@ -20,6 +21,7 @@ static ViewController * viewController;
     products = myProducts;
     popCultureAlready = false;
     celebAlready = false;
+    failAlready = false;
     
     viewController = correctViewController;
 }
@@ -87,24 +89,31 @@ static ViewController * viewController;
 - (void) failedTransaction: (SKPaymentTransaction *)transaction
 {
     if (transaction.error.code != SKErrorPaymentCancelled) {
-        // Optionally, display an error here.
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"An error has occured"
-                                                        message:@"Sorry!  Your purchase could not be made at this time."
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        if(!failAlready){
+            failAlready = true;
+            // Optionally, display an error here.
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"An error has occured"
+                                                            message:@"Sorry!  Your purchase could not be made at this time."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            [self performSelector:@selector(resetFail) withObject:NO afterDelay:TIME_BETWEEN];
+        }
     }
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
 }
 
+-(void)resetFail{
+    failAlready = false;
+}
+
 - (void) restoreTransaction: (SKPaymentTransaction *)transaction
 {
+    settings = [NSUserDefaults standardUserDefaults];
     //use the transaction to call the right function (transaction should have the product identifier)
     if([transaction.originalTransaction.payment.productIdentifier isEqual: POP_PACK_IDENTIFIER]){
         if(!popCultureAlready){
-            settings = [NSUserDefaults standardUserDefaults];
-            
             [settings setBool:true forKey:HAS_PURCH_S];
             
             popCultureAlready = true;
@@ -117,9 +126,7 @@ static ViewController * viewController;
             [self showPopupForPurchaseSuccess];
         }
     }else if([transaction.originalTransaction.payment.productIdentifier isEqual: CELEB_PACK_IDENTIFIER]){
-        if(!celebAlready){
-            settings = [NSUserDefaults standardUserDefaults];
-            
+        if(!celebAlready){            
             [settings setBool:true forKey:HAS_PURCH_S];
             
             celebAlready = true;
@@ -132,13 +139,14 @@ static ViewController * viewController;
             [self showPopupForPurchaseSuccess];
         }
     }
+    //[settings setBool:true forKey:HAS_RESTORED_S];
     
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
 }
 
 - (void) showPopupForPurchaseSuccess{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!"
-                                                    message:@"You got it!  Your purchase is complete!  Go ahead and select your search pack to use it."
+                                                    message:@"You got it!  Your transaction is complete!"
                                                    delegate:nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];

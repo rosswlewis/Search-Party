@@ -14,8 +14,10 @@
 #import "CelebPackPurchases.h"
 #import "ResetAnswers.h"
 #import "DejalActivityView.h"
+#import <GameKit/GameKit.h>
+#import "GAITrackedViewController.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : GAITrackedViewController <GKLeaderboardViewControllerDelegate,GKAchievementViewControllerDelegate>
 {
     NSUserDefaults * settings;
     BOOL sound;
@@ -40,8 +42,13 @@
     ResetAnswers * resetAnswers;
     
     UIImageView * backgroundImage;
+    
+    BOOL hasRestored;
 }
-
+@property (weak, nonatomic) IBOutlet UIButton *LeaderboardIphoneNew;
+@property (weak, nonatomic) IBOutlet UIButton *AcheivementsIphoneNew;
+@property (weak, nonatomic) IBOutlet UIButton *AcheivmentsIphoneOld;
+@property (weak, nonatomic) IBOutlet UIButton *LeaderboardIphoneOld;
 @property (weak, nonatomic) IBOutlet UILabel *MainMenuSearchPartyText;
 @property (weak, nonatomic) IBOutlet UILabel *GamePickerSearchPartyText;
 @property (weak, nonatomic) IBOutlet UILabel *CorrectStaticText;
@@ -59,6 +66,8 @@
 //-(void)celebPurchaseSuccess;
 -(void)ResetTextValues;
 
+- (IBAction)AcheivmentsButtonPush:(id)sender;
+- (IBAction)LeaderboardButtonPush:(id)sender;
 - (IBAction)DefaultSearchPackChanged:(id)sender;
 - (IBAction)PopSearchPackChanged:(id)sender;
 - (IBAction)CelebritySearchPackChanged:(id)sender;

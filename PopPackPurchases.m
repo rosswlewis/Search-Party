@@ -31,15 +31,26 @@
 -(void)ShowAlert: (NSArray*)myProducts
 {
     products = myProducts;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Purchase a pack?" message:@"Would you like to purchase the Pop Culture search pack?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
-    [alert show];
+    
+//    if([settings objectForKey:HAS_RESTORED_S] == nil){
+//         hasRestored = NO;
+//    }else{
+//        hasRestored = [settings boolForKey:HAS_RESTORED_S];
+//    }
+    
+//    if(hasRestored){
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Purchase a pack?" message:@"Would you like to purchase the Pop Culture search pack?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
+//        [alert show];
+//    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Purchase a pack?" message:@"Would you like to purchase the Pop Culture search pack?  If you have already have made this purchase, you can also restore!" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",@"Restore",nil];
+        [alert show];
+//    }
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         return;
-    }
-    else if (buttonIndex == 1) {
+    }else if (buttonIndex == 1) {
         //use products
         SKProduct *selectedProduct = nil;
         for(SKProduct * prod in products)
@@ -60,6 +71,8 @@
                                                   otherButtonTitles:nil];
             [alert show];
         }
+    }else if (buttonIndex == 2) {
+        [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
     }
 }
 

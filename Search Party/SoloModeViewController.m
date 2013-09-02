@@ -36,6 +36,7 @@ static int queryQueued;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.trackedViewName = @"SinglePlayer";
 	// Do any additional setup after loading the view.
     
     if(SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(@"5.0")){
@@ -56,7 +57,7 @@ static int queryQueued;
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
     changingBackground.frame = CGRectMake(0,0,screenWidth,screenHeight);
-    changingBackground.alpha = .25;
+    changingBackground.alpha = BACKGROUNDALPHA;
     [self.view insertSubview:changingBackground atIndex:0];
     
     accountStore = [[ACAccountStore alloc]init];
@@ -72,6 +73,8 @@ static int queryQueued;
     goNext = YES;
     queryQueued = 0;
     soundEffects = [[SoundEffects alloc] init];
+    
+    gameCenterHelper = [GameCenterHelper sharedInstance];
     
     //load the highest streak
     currentStreak = [NSNumber numberWithInt:0];
@@ -191,6 +194,7 @@ static int queryQueued;
     if(!fromNext)
         queryQueued--;
     if(goNext){
+        [self ClearButtonsEvents];
         [self.theResultLabel setText:@""];
         if(![queryArray count] < 1){
             [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading Suggestions" width:150];
@@ -329,8 +333,46 @@ static int queryQueued;
         [self.buttonNext setEnabled:NO];
         [self.buttonNext setBackgroundImage:[UIImage imageNamed:@"NextSearch_Off.png"] forState:UIControlStateNormal];
         
+        //start a countdown (10 seconds)
+        //with this label [self.theResultLabel setText:@""];
+        //if it gets to 0, show correct answer, but don't affect score
+        countDown = 10;
+        [self.theResultLabel setText:[NSString stringWithFormat:@"%d",countDown]];
+        countdownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(advanceTimer:) userInfo:nil repeats:YES];
+        NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+        [runLoop addTimer:countdownTimer forMode:NSDefaultRunLoopMode];
+        
         [DejalBezelActivityView removeViewAnimated:YES];
     }
+}
+
+- (void)advanceTimer:(NSTimer *)timer
+{
+    countDown = countDown - 1;
+    if (countDown == 0)
+    {
+        // code to stop the timer
+        //and show correct answer
+        [self timerExpired];
+    }else{
+        [self.theResultLabel setText:[NSString stringWithFormat:@"%d",countDown]];
+    }
+}
+
+//timer to give users only 10 seconds to answer
+-(void)timerExpired{
+    [countdownTimer invalidate];
+    countdownTimer = nil;
+    
+    [self.theResultLabel setText:[NSString stringWithFormat:@"Time is up!  This was the correct answer."]];
+    
+    [correctButton setBackgroundColor:[UIColor greenColor]];
+    
+    goNext = YES;
+    [soundEffects PlaySoundGameButtonFailure];
+    [self ClearButtonsEvents];
+    [self CreateGoogleButtons];
+    [self performSelector:@selector(StartANewSearch:) withObject:nil afterDelay:TIME_BETWEEN];
 }
 
 - (void)didReceiveMemoryWarning
@@ -340,6 +382,8 @@ static int queryQueued;
 }
 
 - (void)buttonSuccessClick:(id)sender {
+    [countdownTimer invalidate];
+    countdownTimer = nil;
     queryQueued++;
     [self ClearButtonsEvents];
     [self.theResultLabel setText:[successArray objectAtIndex:arc4random() % [successArray count]]];
@@ -354,6 +398,9 @@ static int queryQueued;
         bestStreak = currentStreak;
         [streak setObject:bestStreak forKey:BEST_STREAK_S];
         [self.bestStreakLabel setText:[bestStreak stringValue]];
+        justUpdatedStreak = YES;
+
+        [gameCenterHelper reportScore: [currentStreak intValue] forCategory: HIGHEST_STREATK_ID];
     }
     
     //load incorrect answers
@@ -373,7 +420,6 @@ static int queryQueued;
     correctAns = [NSNumber numberWithInt:[correctAns intValue] + 1];
     [streak setObject:correctAns forKey:CORRECT_ANS_S];
     
-    
     //load total answered
     NSNumber * totalAns = [[NSNumber alloc]init];
     if([streak objectForKey:TOTAL_ANS_S] == nil){
@@ -382,18 +428,67 @@ static int queryQueued;
         totalAns = [streak objectForKey:TOTAL_ANS_S];
     }
     totalAns = [NSNumber numberWithInt:[totalAns intValue] + 1];
-    
+    //set total answered
     [streak setObject:totalAns forKey:TOTAL_ANS_S];
     
+    //load if using pop and load pop answers
+    //increment pop answers
+    //submit pop answers
+    if([streak objectForKey:POP_PACK_S] != nil && [streak boolForKey:POP_PACK_S])
+    {
+        NSNumber * totalAnsPop = [[NSNumber alloc]init];
+        if([streak objectForKey:TOTAL_POP_ANS] == nil){
+            totalAnsPop = [NSNumber numberWithInt:0];
+        }else{
+            totalAnsPop = [streak objectForKey:TOTAL_POP_ANS];
+        }
+        totalAnsPop = [NSNumber numberWithInt:[totalAnsPop intValue] + 1];
+        //set total answered
+        [streak setObject:totalAnsPop forKey:TOTAL_POP_ANS];
+        [gameCenterHelper submitAchievement:POP_CULTURE_GURU percentComplete:(([totalAnsPop doubleValue] / 20) * 100)];
+    }
+    
+    //load if using celeb and load celeb answers
+    //increment celeb answers
+    //submit celeb answers
+    if([streak objectForKey:CELEB_PACK_S] != nil && [streak boolForKey:CELEB_PACK_S])
+    {
+        NSNumber * totalAnsCeleb = [[NSNumber alloc]init];
+        if([streak objectForKey:TOTAL_CELEB_ANS] == nil){
+            totalAnsCeleb = [NSNumber numberWithInt:0];
+        }else{
+            totalAnsCeleb = [streak objectForKey:TOTAL_CELEB_ANS];
+        }
+        totalAnsCeleb = [NSNumber numberWithInt:[totalAnsCeleb intValue] + 1];
+        //set total answered
+        [streak setObject:totalAnsCeleb forKey:TOTAL_CELEB_ANS];
+        [gameCenterHelper submitAchievement:THE_CELEBRITY percentComplete:(([totalAnsCeleb doubleValue] / 20) * 100)];
+    }
+    
+    //submit current streak to each
+    [gameCenterHelper submitAchievement:APPRENTICE_GUESSER percentComplete:(([currentStreak doubleValue] / 3) * 100)];
+    [gameCenterHelper submitAchievement:SKILLED_SEARCHER percentComplete:(([currentStreak doubleValue] / 5) * 100)];
+    [gameCenterHelper submitAchievement:INTERNET_AFICIONADO percentComplete:(([currentStreak doubleValue] / 7) * 100)];
+    [gameCenterHelper submitAchievement:THE_IMPOSSIBLE percentComplete:(([currentStreak doubleValue] / 15) * 100)];
+    
+    //if correct + incorrect > 20 and % > 50
+    //submit acheivment
+    if((([incorrectAns floatValue] + [correctAns floatValue]) > 19) && [[NSNumber numberWithFloat:(([correctAns floatValue]/([incorrectAns floatValue] + [correctAns floatValue]))*100)] floatValue] > 50)
+    {
+        [gameCenterHelper submitAchievement:MR_CONSISTENT percentComplete:100];
+    }
     
     [self.PercentCorrectLabel setText:[self GetPercentString]];
     
+    [self CreateGoogleButtons];
     [self.buttonNext setEnabled:YES];
     [self.buttonNext setBackgroundImage:[UIImage imageNamed:@"NextSearch.png"] forState:UIControlStateNormal];
     [self performSelector:@selector(StartANewSearch:) withObject:NO afterDelay:TIME_BETWEEN];
 }
 
 - (void)buttonFailClick:(id)sender{
+    [countdownTimer invalidate];
+    countdownTimer = nil;
     queryQueued++;
     [self ClearButtonsEvents];
     [self.theResultLabel setText:[failureArray objectAtIndex:arc4random() % [failureArray count]]];
@@ -436,6 +531,16 @@ static int queryQueued;
     [self.currentStreakLabel setText:[currentStreak stringValue]];
     [self.buttonNext setEnabled:YES];
     [self.buttonNext setBackgroundImage:[UIImage imageNamed:@"NextSearch.png"] forState:UIControlStateNormal];
+    if(justUpdatedStreak && gameCenterHelper->userAuthenticated){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New Record :D"
+                                                        message:@"Your score was updated in the leaderboard!  Go to the main menu to check out the standings!"
+                                                       delegate:self
+                                              cancelButtonTitle:ALL_PACKS_OFF_OK
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    justUpdatedStreak = NO;
+    [self CreateGoogleButtons];
     [self performSelector:@selector(StartANewSearch:) withObject:NO afterDelay:TIME_BETWEEN];
 }
 
@@ -534,6 +639,19 @@ static int queryQueued;
     
     [self.buttonThree removeTarget:self action:@selector(buttonSuccessClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonThree removeTarget:self action:@selector(buttonFailClick:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+-(void)CreateGoogleButtons{
+    [self.buttonOne addTarget:self action:@selector(buttonGoogleSearch:) forControlEvents:UIControlEventTouchUpInside];
+    [self.buttonTwo addTarget:self action:@selector(buttonGoogleSearch:) forControlEvents:UIControlEventTouchUpInside];
+    [self.buttonThree addTarget:self action:@selector(buttonGoogleSearch:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)buttonGoogleSearch:(id)sender {
+    UIButton * searchButton = (UIButton *)sender;
+    
+    searchGoogle = [[OpenSearchInGoogle alloc] init];
+    [searchGoogle ShowAlertWithQuery:searchButton.currentTitle];
 }
 
 - (IBAction)TwitterClick:(id)sender {
@@ -759,7 +877,19 @@ static int queryQueued;
     [DejalBezelActivityView removeViewAnimated:YES];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    //if ([[segue identifier] isEqualToString:SEGUE_FOR_OPTIONS])
+    //{
+    [countdownTimer invalidate];
+    countdownTimer = nil;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    //}
+}
+
 - (void)viewDidUnload {
+    [countdownTimer invalidate];
+    countdownTimer = nil;
     [self setTwitterButton:nil];
     [self setStaticTopText:nil];
     [self setStaticPercentCorrect:nil];
